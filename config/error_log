@@ -1,0 +1,648 @@
+[24-Jan-2026 17:45:32 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php on line 19
+[24-Jan-2026 17:45:32 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php on line 17
+[24-Jan-2026 17:45:32 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php on line 16
+[24-Jan-2026 17:45:32 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php on line 18
+[24-Jan-2026 17:45:34 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php on line 19
+[24-Jan-2026 17:45:34 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php on line 17
+[24-Jan-2026 17:45:34 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php on line 16
+[24-Jan-2026 17:45:34 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php on line 19
+[24-Jan-2026 17:45:34 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php on line 19
+[24-Jan-2026 17:45:34 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php on line 18
+[24-Jan-2026 17:45:34 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php on line 17
+[24-Jan-2026 17:45:34 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php on line 17
+[24-Jan-2026 17:45:34 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php on line 16
+[24-Jan-2026 17:45:34 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php on line 16
+[24-Jan-2026 17:45:34 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php on line 18
+[24-Jan-2026 17:45:34 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php on line 18
+[24-Jan-2026 17:45:38 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function app_path() in /home/gassudan/public_html/mohammed-hashim.sd/config/settings.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/settings.php on line 16
+[24-Jan-2026 17:45:39 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function app_path() in /home/gassudan/public_html/mohammed-hashim.sd/config/settings.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/settings.php on line 16
+[24-Jan-2026 17:45:39 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function app_path() in /home/gassudan/public_html/mohammed-hashim.sd/config/settings.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/settings.php on line 16
+[24-Jan-2026 17:45:39 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function app_path() in /home/gassudan/public_html/mohammed-hashim.sd/config/settings.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/settings.php on line 16
+[26-Jan-2026 16:34:30 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php on line 19
+[26-Jan-2026 16:34:30 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php on line 17
+[26-Jan-2026 16:34:30 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php on line 16
+[26-Jan-2026 16:34:30 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php on line 18
+[26-Jan-2026 16:34:33 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function app_path() in /home/gassudan/public_html/mohammed-hashim.sd/config/settings.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/settings.php on line 16
+[30-Jan-2026 01:08:38 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php on line 19
+[30-Jan-2026 01:08:38 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php on line 17
+[30-Jan-2026 01:08:38 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php on line 16
+[30-Jan-2026 01:08:38 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php on line 18
+[30-Jan-2026 01:08:38 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php on line 19
+[30-Jan-2026 01:08:38 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php on line 17
+[30-Jan-2026 01:08:38 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php on line 16
+[30-Jan-2026 01:08:39 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php on line 18
+[30-Jan-2026 01:08:42 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php on line 19
+[30-Jan-2026 01:08:42 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php on line 19
+[30-Jan-2026 01:08:42 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php on line 17
+[30-Jan-2026 01:08:42 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php on line 17
+[30-Jan-2026 01:08:42 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php on line 16
+[30-Jan-2026 01:08:42 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php on line 16
+[30-Jan-2026 01:08:42 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php on line 18
+[30-Jan-2026 01:08:42 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php on line 18
+[30-Jan-2026 01:08:43 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function app_path() in /home/gassudan/public_html/mohammed-hashim.sd/config/settings.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/settings.php on line 16
+[30-Jan-2026 01:08:44 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function app_path() in /home/gassudan/public_html/mohammed-hashim.sd/config/settings.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/settings.php on line 16
+[30-Jan-2026 01:08:47 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function app_path() in /home/gassudan/public_html/mohammed-hashim.sd/config/settings.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/settings.php on line 16
+[30-Jan-2026 01:08:48 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function app_path() in /home/gassudan/public_html/mohammed-hashim.sd/config/settings.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/settings.php on line 16
+[02-Feb-2026 02:25:34 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php on line 16
+[06-Feb-2026 00:53:04 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php on line 19
+[06-Feb-2026 00:53:04 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php on line 17
+[06-Feb-2026 00:53:04 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php on line 16
+[06-Feb-2026 00:53:04 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php on line 18
+[06-Feb-2026 00:53:07 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function app_path() in /home/gassudan/public_html/mohammed-hashim.sd/config/settings.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/settings.php on line 16
+[09-Feb-2026 19:13:33 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php on line 16
+[09-Feb-2026 19:13:33 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php on line 16
+[09-Feb-2026 19:13:34 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php on line 16
+[09-Feb-2026 19:13:34 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php on line 16
+[09-Feb-2026 19:13:34 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php on line 16
+[09-Feb-2026 19:13:34 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php on line 16
+[09-Feb-2026 19:13:35 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php on line 16
+[09-Feb-2026 19:13:36 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/auth.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/auth.php on line 17
+[09-Feb-2026 19:13:36 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/auth.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/auth.php on line 17
+[09-Feb-2026 19:13:36 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/auth.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/auth.php on line 17
+[09-Feb-2026 19:13:36 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/auth.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/auth.php on line 17
+[09-Feb-2026 19:13:36 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/auth.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/auth.php on line 17
+[09-Feb-2026 19:13:37 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/auth.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/auth.php on line 17
+[09-Feb-2026 19:13:37 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/auth.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/auth.php on line 17
+[09-Feb-2026 19:13:38 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/cache.php on line 18
+[09-Feb-2026 19:13:38 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/cache.php on line 18
+[09-Feb-2026 19:13:38 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/cache.php on line 18
+[09-Feb-2026 19:13:39 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/cache.php on line 18
+[09-Feb-2026 19:13:39 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/cache.php on line 18
+[09-Feb-2026 19:13:39 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/cache.php on line 18
+[09-Feb-2026 19:13:40 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/cache.php on line 18
+[09-Feb-2026 19:13:43 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php on line 19
+[09-Feb-2026 19:13:43 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php on line 19
+[09-Feb-2026 19:13:43 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php on line 19
+[09-Feb-2026 19:13:43 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php on line 19
+[09-Feb-2026 19:13:43 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php on line 19
+[09-Feb-2026 19:13:44 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php on line 19
+[09-Feb-2026 19:13:44 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php on line 19
+[09-Feb-2026 19:13:52 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/filesystems.php on line 16
+[09-Feb-2026 19:13:52 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/filesystems.php on line 16
+[09-Feb-2026 19:13:52 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/filesystems.php on line 16
+[09-Feb-2026 19:13:53 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/filesystems.php on line 16
+[09-Feb-2026 19:13:53 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/filesystems.php on line 16
+[09-Feb-2026 19:13:53 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/filesystems.php on line 16
+[09-Feb-2026 19:13:53 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/filesystems.php on line 16
+[09-Feb-2026 19:13:55 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php on line 17
+[09-Feb-2026 19:13:55 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php on line 17
+[09-Feb-2026 19:13:55 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php on line 17
+[09-Feb-2026 19:13:56 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php on line 17
+[09-Feb-2026 19:13:56 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php on line 17
+[09-Feb-2026 19:13:56 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php on line 17
+[09-Feb-2026 19:13:57 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php on line 17
+[09-Feb-2026 19:14:03 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/queue.php on line 16
+[09-Feb-2026 19:14:03 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/queue.php on line 16
+[09-Feb-2026 19:14:03 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/queue.php on line 16
+[09-Feb-2026 19:14:05 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/queue.php on line 16
+[09-Feb-2026 19:14:05 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/queue.php on line 16
+[09-Feb-2026 19:14:05 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/queue.php on line 16
+[09-Feb-2026 19:14:06 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/queue.php on line 16
+[09-Feb-2026 19:14:08 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php on line 18
+[09-Feb-2026 19:14:08 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php on line 18
+[09-Feb-2026 19:14:08 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php on line 18
+[09-Feb-2026 19:14:09 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/session.php on line 21
+[09-Feb-2026 19:14:09 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/session.php on line 21
+[09-Feb-2026 19:14:09 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/session.php on line 21
+[09-Feb-2026 19:14:10 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php on line 18
+[09-Feb-2026 19:14:10 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php on line 18
+[09-Feb-2026 19:14:10 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php on line 18
+[09-Feb-2026 19:14:10 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/session.php on line 21
+[09-Feb-2026 19:14:11 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php on line 18
+[09-Feb-2026 19:14:11 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/session.php on line 21
+[09-Feb-2026 19:14:11 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/session.php on line 21
+[09-Feb-2026 19:14:11 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/session.php on line 21
+[09-Feb-2026 19:26:30 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php on line 16
+[09-Feb-2026 19:26:31 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/auth.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/auth.php on line 17
+[09-Feb-2026 19:26:32 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/cache.php on line 18
+[09-Feb-2026 19:26:33 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php on line 19
+[09-Feb-2026 19:26:35 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/filesystems.php on line 16
+[09-Feb-2026 19:26:36 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php on line 17
+[09-Feb-2026 19:26:38 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/queue.php on line 16
+[09-Feb-2026 19:26:39 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php on line 18
+[09-Feb-2026 19:26:39 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/session.php on line 21
+[09-Feb-2026 19:34:15 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/cache.php on line 18
+[10-Feb-2026 13:14:30 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php on line 19
+[10-Feb-2026 13:14:30 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php on line 17
+[10-Feb-2026 13:14:30 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php on line 16
+[10-Feb-2026 13:14:30 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php on line 18
+[10-Feb-2026 13:14:33 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function app_path() in /home/gassudan/public_html/mohammed-hashim.sd/config/settings.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/settings.php on line 16
+[10-Feb-2026 13:17:33 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php on line 19
+[10-Feb-2026 13:17:33 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php on line 17
+[10-Feb-2026 13:17:33 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php on line 16
+[10-Feb-2026 13:17:33 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php on line 18
+[10-Feb-2026 13:17:35 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function app_path() in /home/gassudan/public_html/mohammed-hashim.sd/config/settings.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/settings.php on line 16
+[10-Feb-2026 13:18:09 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/cache.php on line 18
+[10-Feb-2026 13:19:40 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/auth.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/auth.php on line 17
+[10-Feb-2026 13:19:40 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/filesystems.php on line 16
+[10-Feb-2026 13:19:40 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/queue.php on line 16
+[10-Feb-2026 13:19:40 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/session.php on line 21
+[10-Feb-2026 13:19:40 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/logging.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/logging.php on line 21
+[10-Feb-2026 13:33:48 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php on line 19
+[10-Feb-2026 13:33:48 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php on line 17
+[10-Feb-2026 13:33:48 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php on line 16
+[10-Feb-2026 13:33:48 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php on line 18
+[10-Feb-2026 13:33:51 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function app_path() in /home/gassudan/public_html/mohammed-hashim.sd/config/settings.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/settings.php on line 16
+[10-Feb-2026 13:34:23 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/cache.php on line 18
+[10-Feb-2026 13:35:57 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/auth.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/auth.php on line 17
+[10-Feb-2026 13:35:57 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/filesystems.php on line 16
+[10-Feb-2026 13:35:57 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/queue.php on line 16
+[10-Feb-2026 13:35:57 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/session.php on line 21
+[10-Feb-2026 13:35:57 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/logging.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/logging.php on line 21
+[10-Feb-2026 13:35:57 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/database.php on line 19
+[10-Feb-2026 13:35:57 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/mail.php on line 17
+[10-Feb-2026 13:35:57 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/app.php on line 16
+[10-Feb-2026 13:35:57 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/services.php on line 18
+[10-Feb-2026 13:36:00 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function app_path() in /home/gassudan/public_html/mohammed-hashim.sd/config/settings.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/settings.php on line 16
+[10-Feb-2026 13:36:34 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/cache.php on line 18
+[10-Feb-2026 13:38:08 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/auth.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/auth.php on line 17
+[10-Feb-2026 13:38:08 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/filesystems.php on line 16
+[10-Feb-2026 13:38:08 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/queue.php on line 16
+[10-Feb-2026 13:38:08 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/session.php on line 21
+[10-Feb-2026 13:38:08 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/gassudan/public_html/mohammed-hashim.sd/config/logging.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/gassudan/public_html/mohammed-hashim.sd/config/logging.php on line 21
