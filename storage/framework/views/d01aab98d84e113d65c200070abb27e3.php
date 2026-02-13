@@ -58,12 +58,11 @@
                 وبضمان حقيقي.
             </p>
             <div class="flex flex-wrap justify-center md:justify-start gap-4">
-                <a href="#parts"
-                    class="bg-green-600 px-8 py-3 rounded-lg text-lg font-bold hover:bg-green-700 transition">استكشف
-                    القطع</a>
                 <a href="#services"
-                    class="bg-white text-gray-900 px-8 py-3 rounded-lg text-lg font-bold hover:bg-gray-100 transition">لماذا
-                    نحن؟</a>
+                    class="bg-green-600 px-8 py-3 rounded-lg text-lg font-bold hover:bg-green-700 transition">لماذا نحن؟</a>
+                <a href="#contact"
+                    class="bg-white text-gray-900 px-8 py-3 rounded-lg text-lg font-bold hover:bg-gray-100 transition">اتصل
+                    بنا</a>
             </div>
         </div>
     </section>
@@ -292,7 +291,7 @@
     <!-- Footer -->
     <footer class="bg-gray-900 text-white py-12">
         <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
                 <div class="col-span-1 md:col-span-1">
                     <div class="text-2xl font-bold text-green-500 mb-6 flex items-center gap-2">
                         الاستقامة
@@ -307,7 +306,7 @@
                     <ul class="space-y-3 text-gray-400">
                         <li><a href="#home" class="hover:text-green-500 transition">الرئيسية</a></li>
                         <li><a href="#services" class="hover:text-green-500 transition">من نحن</a></li>
-                        <li><a href="#parts" class="hover:text-green-500 transition">قطع الغيار</a></li>
+                        <!-- <li><a href="#parts" class="hover:text-green-500 transition">قطع الغيار</a></li> -->
                         <li><a href="#contact" class="hover:text-green-500 transition">اتصل بنا</a></li>
                     </ul>
                 </div>
@@ -319,15 +318,7 @@
                         </li>
                     </ul>
                 </div>
-                <div>
-                    <h4 class="font-bold text-lg mb-6">اشترك في النشرة</h4>
-                    <p class="text-gray-400 text-sm mb-4">احصل على آخر العروض والخصومات فور وصولها.</p>
-                    <div class="flex gap-2">
-                        <input type="email" placeholder="بريدك الإلكتروني"
-                            class="bg-gray-800 border-none px-4 py-2 rounded-lg text-sm focus:ring-1 focus:ring-green-600 w-full">
-                        <button class="bg-green-600 px-4 py-2 rounded-lg hover:bg-green-700 transition">سجل</button>
-                    </div>
-                </div>
+                
             </div>
             <div class="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
                <a href="https://deyaa.alsultansudan.com"> <p>جميع الحقوق محفوظة &copy;  لشركة ضياء البشري محمد <?php echo date('Y'); ?> </p></a>
