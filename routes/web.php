@@ -7,3 +7,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/errors/{code}', function ($code) {
     abort($code);
 });
+
+Route::get('/', function () {
+    return view('welcome');
+});

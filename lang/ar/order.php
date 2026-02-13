@@ -79,6 +79,7 @@ return [
             'options' => [
                 'new' => 'جديد',
                 'used' => 'مستعمل',
+                'total' => 'الإجمالي',
             ],
         ],
         'currency' => [

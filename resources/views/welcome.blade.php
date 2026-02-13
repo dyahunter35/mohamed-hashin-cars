@@ -1,439 +1,430 @@
-<x-filament-panels::page>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Inventory Report Sample</title>
-        <link rel="stylesheet" href="index.css">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-        <style>
-            :root {
-                /* Dark Theme (Default) */
-                --bg-primary: #111827;
-                --bg-secondary: #1f2937;
-                --border-color: #374151;
-                --text-primary: #f3f4f6;
-                --text-secondary: #9ca3af;
-                --accent-color: #38bdf8;
-                --accent-gradient-to: #6366f1;
-                --hover-bg-color: rgba(55, 65, 81, 0.5);
-                --shadow-color: rgba(0, 0, 0, 0.2);
-                --font-family: 'Inter', sans-serif;
-            }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شركة الاستقامة لقطع غيار السيارات - السودان</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            scroll-behavior: smooth;
+        }
 
-            body.light-mode {
-                /* Light Theme */
-                --bg-primary: #f3f4f6;
-                --bg-secondary: #ffffff;
-                --border-color: #e5e7eb;
-                --text-primary: #1f2937;
-                --text-secondary: #6b7280;
-                --accent-color: #0ea5e9;
-                --accent-gradient-to: #4f46e5;
-                --hover-bg-color: rgba(229, 231, 235, 0.6);
-                --shadow-color: rgba(0, 0, 0, 0.1);
-            }
+        .hero-gradient {
+            background: linear-gradient(rgba(17, 24, 39, 0.8), rgba(17, 24, 39, 0.8)), url('https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?q=80&w=1600&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
 
-            * {
-                box-sizing: border-box;
-                margin: 0;
-                padding: 0;
-            }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
 
-            body {
-                background-color: var(--bg-primary);
-                color: var(--text-primary);
-                font-family: var(--font-family);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                min-height: 100vh;
-                padding: 1rem;
-                transition: background-color 0.3s ease, color 0.3s ease;
-            }
+        .card-hover:hover {
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
 
-            .report-container {
-                width: 100%;
-                max-width: 56rem;
-                /* 896px */
-                margin: 0 auto;
-            }
+        .branch-badge {
+            background: linear-gradient(90deg, #ef4444, #b91c1c);
+        }
+    </style>
+</head>
 
-            .report-card {
-                background-color: var(--bg-secondary);
-                border-radius: 1rem;
-                /* 16px */
-                box-shadow: 0 20px 25px -5px var(--shadow-color), 0 8px 10px -6px var(--shadow-color);
-                padding: 2rem;
-                transition: background-color 0.3s ease;
-            }
+<body class="bg-gray-50 text-gray-900">
 
-            .report-header {
-                margin-bottom: 1.5rem;
-                padding-bottom: 1rem;
-                border-bottom: 1px solid var(--border-color);
-                transition: border-color 0.3s ease;
-            }
+    <!-- Header / Navbar -->
+    <header class="glass-effect shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-red-600 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-9" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h5a1 1 0 011 1v10a1 1 0 01-1 1h-1" />
+                </svg>
+                <span class="tracking-tighter">الاستقامة</span>
+            </div>
+            <div class="hidden lg:flex space-x-reverse space-x-8 font-semibold text-gray-700">
+                <a href="#home" class="hover:text-red-600 transition">الرئيسية</a>
+                <a href="#branches" class="hover:text-red-600 transition">فروعنا</a>
+                <a href="#parts" class="hover:text-red-600 transition">قطع الغيار</a>
+                <a href="#contact" class="hover:text-red-600 transition">اتصل بنا</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <div
+                    class="hidden sm:flex items-center gap-2 bg-gray-100 px-3 py-1 rounded-full border border-gray-200">
+                    <span class="text-sm font-bold">السودان</span>
+                    <span class="text-lg">🇸🇩</span>
+                </div>
+                <a href="https://wa.me/249xxxxxxxxx"
+                    class="bg-red-600 text-white px-5 py-2.5 rounded-lg font-bold hover:bg-red-700 transition shadow-lg shadow-red-200 text-sm">
+                    اطلب الآن
+                </a>
+            </div>
+        </nav>
+    </header>
 
-            .header-content {
-                display: flex;
-                justify-content: space-between;
-                align-items: flex-start;
-                flex-wrap: wrap;
-                gap: 1rem;
-            }
+    <!-- Hero Section -->
+    <section id="home" class="hero-gradient min-h-[650px] flex items-center text-white relative overflow-hidden">
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-3xl">
+                <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
+                    وجهتك الموثوقة لقطع غيار <br> <span
+                        class="text-red-500 underline decoration-white/20 underline-offset-8">السيارات بالسودان</span>
+                </h1>
+                <p class="text-xl md:text-2xl mb-10 text-gray-200 leading-relaxed font-light">
+                    نحن في شركة الاستقامة نوفر لكم أفضل تشكيلة من قطع الغيار الأصلية والجديدة والمستعملة (التشليح) لجميع
+                    أنواع السيارات عبر شبكة فروعنا الواسعة.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#branches"
+                        class="bg-red-600 px-10 py-4 rounded-xl text-lg font-bold hover:bg-red-700 transition-all transform hover:scale-105 shadow-xl shadow-red-900/20">
+                        فروعنا في السودان
+                    </a>
+                    <a href="#parts"
+                        class="bg-white/10 backdrop-blur-md border border-white/20 px-10 py-4 rounded-xl text-lg font-bold hover:bg-white/20 transition-all">
+                        تصفح الأقسام
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Decorative element -->
+        <div class="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-gray-50 to-transparent"></div>
+    </section>
 
-            .header-title-group {
-                display: flex;
-                align-items: center;
-                gap: 1rem;
-            }
+    <!-- Features Stats (Integrated from Design 1) -->
+    <div class="container mx-auto px-6 -mt-16 relative z-20">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div
+                class="bg-white p-8 rounded-2xl shadow-xl flex items-center gap-6 border-b-4 border-red-600 card-hover">
+                <div
+                    class="w-16 h-16 bg-red-100 rounded-xl flex items-center justify-center text-red-600 flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <div>
+                    <div class="text-2xl font-black text-gray-800 uppercase tracking-wide">100%</div>
+                    <div class="text-gray-500 font-medium">ضمان الجودة</div>
+                </div>
+            </div>
+            <div
+                class="bg-white p-8 rounded-2xl shadow-xl flex items-center gap-6 border-b-4 border-red-600 card-hover">
+                <div
+                    class="w-16 h-16 bg-red-100 rounded-xl flex items-center justify-center text-red-600 flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+                <div>
+                    <div class="text-2xl font-black text-gray-800">+15,000</div>
+                    <div class="text-gray-500 font-medium">قطعة غيار جاهزة</div>
+                </div>
+            </div>
+            <div
+                class="bg-white p-8 rounded-2xl shadow-xl flex items-center gap-6 border-b-4 border-red-600 card-hover">
+                <div
+                    class="w-16 h-16 bg-red-100 rounded-xl flex items-center justify-center text-red-600 flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                </div>
+                <div>
+                    <div class="text-2xl font-black text-gray-800">3 فروع</div>
+                    <div class="text-gray-500 font-medium">نغطي أهم المدن</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            .logo {
-                height: 2.5rem;
-                width: 2.5rem;
-                color: var(--accent-color);
-            }
+    <!-- Branches Section (The Core of Design 2 with Design 1 Styling) -->
+    <section id="branches" class="py-24 bg-gray-50">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4">فروعنا في قلب السودان</h2>
+            <div class="w-24 h-2 bg-red-600 mx-auto rounded-full mb-8"></div>
+            <p class="text-gray-600 max-w-2xl mx-auto text-lg mb-16">
+                نحن في الاستقامة نفتخر بتواجدنا في أهم المراكز الحيوية لنكون الأقرب لسيارتك دائماً.
+            </p>
 
-            .report-title {
-                font-size: 1.875rem;
-                /* 30px */
-                font-weight: 700;
-                background: linear-gradient(to right, var(--accent-color), var(--accent-gradient-to));
-                -webkit-background-clip: text;
-                background-clip: text;
-                color: transparent;
-            }
-
-            .report-subtitle {
-                color: var(--text-secondary);
-                font-size: 0.875rem;
-                /* 14px */
-            }
-
-            .header-actions {
-                display: flex;
-                align-items: center;
-                gap: 1.5rem;
-                margin-left: auto;
-            }
-
-            .header-date {
-                text-align: right;
-            }
-
-            .date-label {
-                font-weight: 600;
-                color: var(--text-primary);
-            }
-
-            .date-value {
-                color: var(--text-secondary);
-                font-size: 0.875rem;
-                /* 14px */
-            }
-
-            /* Theme Switcher */
-            .theme-switcher {
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-            }
-
-            .theme-icon {
-                width: 1.25rem;
-                height: 1.25rem;
-                color: var(--text-secondary);
-            }
-
-            .toggle-switch {
-                position: relative;
-                display: inline-block;
-                width: 44px;
-                height: 24px;
-            }
-
-            .toggle-switch input {
-                opacity: 0;
-                width: 0;
-                height: 0;
-            }
-
-            .slider {
-                position: absolute;
-                cursor: pointer;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background-color: #4b5563;
-                /* gray-600 */
-                transition: .4s;
-                border-radius: 24px;
-            }
-
-            .slider:before {
-                position: absolute;
-                content: "";
-                height: 18px;
-                width: 18px;
-                left: 3px;
-                bottom: 3px;
-                background-color: white;
-                transition: .4s;
-                border-radius: 50%;
-            }
-
-            input:checked+.slider {
-                background-color: var(--accent-color);
-            }
-
-            input:focus+.slider {
-                box-shadow: 0 0 1px var(--accent-color);
-            }
-
-            input:checked+.slider:before {
-                transform: translateX(20px);
-            }
-
-            .table-wrapper {
-                overflow-x: auto;
-            }
-
-            .report-table {
-                width: 100%;
-                border-collapse: collapse;
-                font-size: 0.875rem;
-                color: var(--text-secondary);
-            }
-
-            .report-table th,
-            .report-table td {
-                padding: 1rem;
-                text-align: left;
-            }
-
-            .report-table thead {
-                font-size: 0.75rem;
-                text-transform: uppercase;
-                color: var(--text-primary);
-                background-color: var(--hover-bg-color);
-            }
-
-            .report-table tbody tr {
-                border-bottom: 1px solid var(--border-color);
-                transition: background-color 0.2s ease-in-out, border-color 0.3s ease;
-            }
-
-            .report-table tbody tr:hover {
-                background-color: var(--hover-bg-color);
-            }
-
-            .report-table tbody tr:last-child {
-                border-bottom: none;
-            }
-
-            .product-name {
-                font-weight: 600;
-                color: var(--text-primary);
-                white-space: nowrap;
-            }
-
-            .total-cell {
-                font-weight: 700;
-                color: var(--accent-color);
-            }
-
-            .report-table tfoot {
-                font-weight: 700;
-                color: var(--text-primary);
-                background-color: var(--hover-bg-color);
-                border-top: 2px solid var(--border-color);
-                transition: border-color 0.3s ease;
-            }
-
-            .grand-total-cell {
-                font-size: 1.125rem;
-                color: var(--accent-color);
-            }
-
-            .text-center {
-                text-align: center;
-            }
-
-            @media (min-width: 640px) {
-                .header-content {
-                    flex-wrap: nowrap;
-                    align-items: center;
-                }
-
-                .header-actions {
-                    margin-top: 0;
-                }
-            }
-        </style>
-    </head>
-
-    <body>
-
-        <main id="app-container" class="report-container">
-            <div class="report-card">
-                <header class="report-header">
-                    <div class="header-content">
-                        <div class="header-title-group">
-                            <!-- Logo SVG -->
-                            <svg class="logo" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke-width="1.5" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1.5-1.5m1.5 1.5l1.5-1.5m3.75-3l-1.5-1.5m1.5 1.5l1.5-1.5m-7.5-3v3.75c0 .621.504 1.125 1.125 1.125h4.5c.621 0 1.125-.504 1.125-1.125V6.75m-6.75 0h6.75" />
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <!-- Branch Card: Omdurman -->
+                <div
+                    class="group bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100">
+                    <div class="h-56 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?q=80&w=800&auto=format&fit=crop"
+                            class="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+                            alt="أمدرمان">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div
+                            class="absolute bottom-4 right-4 branch-badge text-white px-4 py-1.5 rounded-full font-bold text-sm">
+                            أمدرمان</div>
+                    </div>
+                    <div class="p-8 text-right">
+                        <h3 class="text-2xl font-bold mb-4 flex items-center gap-2">
+                            <span class="w-2 h-8 bg-red-600 rounded-full"></span>
+                            فرع المنطقة الصناعية
+                        </h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">المركز الرئيسي لقطع الغيار الجديدة والماركات
+                            العالمية الحديثة في قلب أمدرمان.</p>
+                        <div class="flex items-center gap-2 text-red-600 font-bold group-hover:gap-4 transition-all">
+                            <span>زيارة الموقع</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 rotate-180" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3" />
                             </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Branch Card: Medani -->
+                <div
+                    class="group bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100">
+                    <div class="h-56 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1517524206127-48bbd363f3d7?q=80&w=800&auto=format&fit=crop"
+                            class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="مدني">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div
+                            class="absolute bottom-4 right-4 branch-badge text-white px-4 py-1.5 rounded-full font-bold text-sm">
+                            مدني</div>
+                    </div>
+                    <div class="p-8 text-right">
+                        <h3 class="text-2xl font-bold mb-4 flex items-center gap-2">
+                            <span class="w-2 h-8 bg-red-600 rounded-full"></span>
+                            فرع مدني
+                        </h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">نوفر جميع احتياجات الصيانة الدورية في الجزيرة
+                            بأعلى مواصفات الجودة.</p>
+                        <div class="flex items-center gap-2 text-red-600 font-bold group-hover:gap-4 transition-all">
+                            <span>زيارة الموقع</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 rotate-180" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Branch Card: Al-Masoudiya -->
+                <div
+                    class="group bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100">
+                    <div class="h-56 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1562426509-5044a121aa49?q=80&w=800&auto=format&fit=crop"
+                            class="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+                            alt="المسعودية">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div
+                            class="absolute bottom-4 right-4 branch-badge text-white px-4 py-1.5 rounded-full font-bold text-sm">
+                            المسعودية</div>
+                    </div>
+                    <div class="p-8 text-right">
+                        <h3 class="text-2xl font-bold mb-4 flex items-center gap-2">
+                            <span class="w-2 h-8 bg-red-600 rounded-full"></span>
+                            فرع الطريق السريع
+                        </h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">مركز متخصص في قطع غيار التشليح المستعملة النظيفة
+                            لسيارات الدفع الرباعي والشاحنات.</p>
+                        <div class="flex items-center gap-2 text-red-600 font-bold group-hover:gap-4 transition-all">
+                            <span>زيارة الموقع</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 rotate-180" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories / Featured Parts (Design 1 Grid) -->
+    <section id="parts" class="py-24 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-16 gap-6">
+                <div class="text-center md:text-right">
+                    <h2 class="text-4xl font-extrabold text-gray-900 mb-4">ماذا نوفر لك؟</h2>
+                    <p class="text-gray-600">أقسام شاملة لجميع موديلات السيارات</p>
+                </div>
+                <div class="flex gap-4">
+                    <div class="bg-red-50 text-red-600 px-6 py-2 rounded-full font-bold text-sm border border-red-100">
+                        جديد</div>
+                    <div class="bg-gray-100 text-gray-600 px-6 py-2 rounded-full font-bold text-sm">مستعمل</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 text-center">
+                <!-- Cat 1 -->
+                <div class="group cursor-pointer">
+                    <div
+                        class="bg-gray-50 rounded-3xl p-8 border-2 border-transparent group-hover:border-red-600 group-hover:bg-red-50 transition-all duration-300">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2885/2885421.png"
+                            class="w-20 h-20 mx-auto mb-6 grayscale group-hover:grayscale-0 transition" alt="المحركات">
+                        <span class="font-extrabold text-gray-800 group-hover:text-red-600">المحركات</span>
+                    </div>
+                </div>
+                <!-- Cat 2 -->
+                <div class="group cursor-pointer">
+                    <div
+                        class="bg-gray-50 rounded-3xl p-8 border-2 border-transparent group-hover:border-red-600 group-hover:bg-red-50 transition-all duration-300">
+                        <img src="https://cdn-icons-png.flaticon.com/512/1000/1000854.png"
+                            class="w-20 h-20 mx-auto mb-6 grayscale group-hover:grayscale-0 transition" alt="الفرامل">
+                        <span class="font-extrabold text-gray-800 group-hover:text-red-600 text-sm">أنظمة الفرامل</span>
+                    </div>
+                </div>
+                <!-- Cat 3 -->
+                <div class="group cursor-pointer">
+                    <div
+                        class="bg-gray-50 rounded-3xl p-8 border-2 border-transparent group-hover:border-red-600 group-hover:bg-red-50 transition-all duration-300">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3039/3039462.png"
+                            class="w-20 h-20 mx-auto mb-6 grayscale group-hover:grayscale-0 transition" alt="الجيربكس">
+                        <span class="font-extrabold text-gray-800 group-hover:text-red-600">الجيربكس</span>
+                    </div>
+                </div>
+                <!-- Cat 4 -->
+                <div class="group cursor-pointer">
+                    <div
+                        class="bg-gray-50 rounded-3xl p-8 border-2 border-transparent group-hover:border-red-600 group-hover:bg-red-50 transition-all duration-300">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3202/3202926.png"
+                            class="w-20 h-20 mx-auto mb-6 grayscale group-hover:grayscale-0 transition" alt="الهيكل">
+                        <span class="font-extrabold text-gray-800 group-hover:text-red-600">قطع الهيكل</span>
+                    </div>
+                </div>
+                <!-- Cat 5 -->
+                <div class="group cursor-pointer">
+                    <div
+                        class="bg-gray-50 rounded-3xl p-8 border-2 border-transparent group-hover:border-red-600 group-hover:bg-red-50 transition-all duration-300">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2983/2983804.png"
+                            class="w-20 h-20 mx-auto mb-6 grayscale group-hover:grayscale-0 transition" alt="الكهرباء">
+                        <span class="font-extrabold text-gray-800 group-hover:text-red-600 text-sm">الكهرباء</span>
+                    </div>
+                </div>
+                <!-- Cat 6 -->
+                <div class="group cursor-pointer">
+                    <div
+                        class="bg-gray-50 rounded-3xl p-8 border-2 border-transparent group-hover:border-red-600 group-hover:bg-red-50 transition-all duration-300">
+                        <img src="https://cdn-icons-png.flaticon.com/512/741/741407.png"
+                            class="w-20 h-20 mx-auto mb-6 grayscale group-hover:grayscale-0 transition" alt="الإطارات">
+                        <span class="font-extrabold text-gray-800 group-hover:text-red-600">الإطارات</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WhatsApp CTA (Sticky Inspired) -->
+    <div class="fixed bottom-8 left-8 z-[100] group">
+        <a href="https://wa.me/249xxxxxxxxx"
+            class="flex items-center gap-3 bg-green-500 text-white p-4 rounded-full shadow-2xl hover:bg-green-600 transition-all transform group-hover:scale-110">
+            <span
+                class="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-500 font-bold whitespace-nowrap">اطلب
+                قطعتك الآن</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                    d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.964 9.964 0 001.333 4.993L2 22l5.233-1.237a9.921 9.921 0 004.779 1.217h.004c5.505 0 9.988-4.478 9.989-9.984 0-2.669-1.037-5.176-2.922-7.062A9.925 9.925 0 0012.012 2z" />
+            </svg>
+        </a>
+    </div>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 bg-gray-900 text-white relative">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
+                <div class="space-y-8">
+                    <h2 class="text-4xl font-black mb-8 italic">نحن دائماً في خدمتك</h2>
+                    <p class="text-gray-400 text-lg leading-relaxed">سواء كنت في الخرطوم، مدني، أو المسعودية، نحن نوفر
+                        لك حلولاً متكاملة لصيانة سيارتك بأسعار مدروسة.</p>
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-6">
+                            <div
+                                class="w-14 h-14 bg-red-600/20 border border-red-600/30 rounded-2xl flex items-center justify-center text-red-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                </svg>
+                            </div>
                             <div>
-                                <h1 class="report-title">Product Inventory Report</h1>
-                                <p class="report-subtitle">A sample inventory report with a custom CSS design.</p>
+                                <h4 class="font-bold text-gray-200">الرقم الموحد</h4>
+                                <p class="text-white font-mono" dir="ltr">+249 900 000 000</p>
                             </div>
                         </div>
-                        <div class="header-actions">
-                            <div class="header-date">
-                                <p class="date-label">Date</p>
-                                <p class="date-value">October 26, 2023</p>
+                        <div class="flex items-center gap-6">
+                            <div
+                                class="w-14 h-14 bg-red-600/20 border border-red-600/30 rounded-2xl flex items-center justify-center text-red-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
                             </div>
-                            <div class="theme-switcher">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.5" stroke="currentColor" class="theme-icon sun">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
-                                </svg>
-                                <label for="theme-toggle" class="toggle-switch" aria-label="Theme toggle">
-                                    <input type="checkbox" id="theme-toggle">
-                                    <span class="slider"></span>
-                                </label>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.5" stroke="currentColor" class="theme-icon moon">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
-                                </svg>
+                            <div>
+                                <h4 class="font-bold text-gray-200">أوقات العمل</h4>
+                                <p class="text-white">السبت - الخميس (8 ص - 9 م)</p>
                             </div>
                         </div>
                     </div>
-                </header>
+                </div>
 
-                <div class="table-wrapper">
-                    <table class="report-table">
-                        <thead>
-                            <tr>
-                                <th>Product Name</th>
-                                <th class="text-center">Branch A</th>
-                                <th class="text-center">Branch B</th>
-                                <th class="text-center">Branch C</th>
-                                <th class="text-center">Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="product-name">Quantum Laptop</td>
-                                <td class="text-center">25</td>
-                                <td class="text-center">40</td>
-                                <td class="text-center">15</td>
-                                <td class="text-center total-cell">80</td>
-                            </tr>
-                            <tr>
-                                <td class="product-name">Hyper-V Drone</td>
-                                <td class="text-center">10</td>
-                                <td class="text-center">55</td>
-                                <td class="text-center">30</td>
-                                <td class="text-center total-cell">95</td>
-                            </tr>
-                            <tr>
-                                <td class="product-name">Nova Smartwatch</td>
-                                <td class="text-center">75</td>
-                                <td class="text-center">20</td>
-                                <td class="text-center">50</td>
-                                <td class="text-center total-cell">145</td>
-                            </tr>
-                            <tr>
-                                <td class="product-name">Echo Earbuds</td>
-                                <td class="text-center">90</td>
-                                <td class="text-center">60</td>
-                                <td class="text-center">85</td>
-                                <td class="text-center total-cell">235</td>
-                            </tr>
-                            <tr>
-                                <td class="product-name">Galactic Tablet</td>
-                                <td class="text-center">33</td>
-                                <td class="text-center">48</td>
-                                <td class="text-center">62</td>
-                                <td class="text-center total-cell">143</td>
-                            </tr>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td>Branch Totals</td>
-                                <td class="text-center">233</td>
-                                <td class="text-center">223</td>
-                                <td class="text-center">242</td>
-                                <td class="text-center grand-total-cell">698</td>
-                            </tr>
-                        </tfoot>
-                    </table>
+                <div class="bg-white text-gray-900 p-10 rounded-3xl shadow-2xl">
+                    <h3 class="text-2xl font-bold mb-8">اطلب قطعتك الآن</h3>
+                    <form
+                        onsubmit="event.preventDefault(); alert('تم استلام طلبك، سيتصل بك فريق فرع الاستقامة قريباً.')"
+                        class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">الفرع المطلوب</label>
+                            <select
+                                class="w-full p-4 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:border-red-600">
+                                <option>فرع أمدرمان</option>
+                                <option>فرع مدني</option>
+                                <option>فرع المسعودية</option>
+                            </select>
+                        </div>
+                        <input type="text" placeholder="الاسم الكامل"
+                            class="w-full p-4 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:border-red-600">
+                        <input type="tel" placeholder="رقم الهاتف بالسودان"
+                            class="w-full p-4 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:border-red-600 text-right">
+                        <textarea rows="3" placeholder="نوع السيارة + القطعة المطلوبة"
+                            class="w-full p-4 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:border-red-600"></textarea>
+                        <button
+                            class="w-full bg-red-600 text-white py-5 rounded-xl font-black text-lg hover:bg-red-700 transition transform hover:scale-[1.02]">
+                            إرسال الطلب
+                        </button>
+                    </form>
                 </div>
             </div>
-        </main>
+        </div>
+    </section>
 
-        <style>
-            @media print {
-                body * {
-                    visibility: hidden;
-                }
+    <!-- Footer -->
+    <footer class="bg-black py-12 border-t border-gray-800">
+        <div class="container mx-auto px-6 text-center">
+            <div class="text-2xl font-black text-red-600 mb-6 italic tracking-widest">AL-ISTIQAMA</div>
+            <p class="text-gray-500 text-sm mb-8">شركة الاستقامة لقطع غيار السيارات - فخر الصناعة والجودة في السودان</p>
+            <div class="flex justify-center gap-8 text-gray-400 mb-8">
+                <a href="#" class="hover:text-white transition underline-offset-4 hover:underline">فيسبوك</a>
+                <a href="#" class="hover:text-white transition underline-offset-4 hover:underline">تويتر</a>
+                <a href="#" class="hover:text-white transition underline-offset-4 hover:underline">إنستغرام</a>
+            </div>
+            <div class="text-gray-600 text-xs">
+                © 2024 جميع الحقوق محفوظة لشركة الاستقامة بالسودان
+            </div>
+        </div>
+    </footer>
 
-                #app-container,
-                #app-container * {
-                    visibility: visible;
-                }
+</body>
 
-                #report-content {
-                    position: absolute;
-                    left: 0;
-                    top: 0;
-                    width: 100%;
-                    margin: 0;
-                    padding: 0;
-                    border: none;
-                    box-shadow: none;
-                }
-            }
-        </style>
-
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                const themeToggle = document.getElementById('theme-toggle');
-                const body = document.body;
-
-                const setTheme = (isLight) => {
-                    if (isLight) {
-                        body.classList.add('light-mode');
-                        themeToggle.checked = true;
-                        localStorage.setItem('theme', 'light');
-                    } else {
-                        body.classList.remove('light-mode');
-                        themeToggle.checked = false;
-                        localStorage.setItem('theme', 'dark');
-                    }
-                };
-
-                themeToggle.addEventListener('change', () => {
-                    setTheme(themeToggle.checked);
-                });
-
-                const savedTheme = localStorage.getItem('theme');
-                const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-
-                if (savedTheme) {
-                    setTheme(savedTheme === 'light');
-                } else {
-                    setTheme(prefersLight);
-                }
-            });
-        </script>
-</x-filament-panels::page>
+</html>

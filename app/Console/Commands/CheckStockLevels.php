@@ -7,89 +7,90 @@ use App\Models\Product;
 use App\Models\User;
 use Filament\Notifications\Notification;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class CheckStockLevels extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'stock:check-levels';
+    protected $description = 'التحقق من مستويات المخزون وإرسال تنبيهات للمدراء';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Check for products with low stock levels and notify users.';
-
-    /**
-     * Execute the console command.
-     */
     public function handle()
     {
-        $this->info('Checking stock levels...');
-        Log::info('Running Stock Level Check Command...');
+        $this->info('بدء فحص مستويات المخزون...');
 
-        // --- 1. Find products that are low on stock ---
+        // 1. جلب المنتجات التي قل مخزونها عن حد الأمان
+        // استخدمنا subquery لحساب المجموع بشكل أسرع
         $lowStockProducts = Product::query()
-            ->withSum('branches as total_stock', 'branch_product.total_quantity')
-            ->whereRaw('COALESCE((select sum(total_quantity) from branch_product where product_id = products.id), 0) <= security_stock')
+            ->select('products.*')
+            ->selectSub(function ($query) {
+                $query->from('branch_product')
+                    ->whereColumn('product_id', 'products.id')
+                    ->selectRaw('SUM(new_quantity + used_quantity)');
+            }, 'actual_total_stock')
             ->whereNull('low_stock_notified_at')
+            ->whereRaw('COALESCE((select sum(new_quantity + used_quantity) from branch_product where product_id = products.id), 0) <= security_stock')
             ->get();
 
-        $allUsers = User::role(['مدير','super_admin'])->get();
-
-        if ($lowStockProducts->isNotEmpty()) {
-
-            $this->info("Found {$lowStockProducts->count()} products with low stock.");
-
-            foreach ($lowStockProducts as $product) {
-                // Send notification to all users
-                Notification::make()
-                    ->title('تنبيه انخفاض المخزون')
-                    ->body("المنتج '{$product->name}' وصل إلى حد المخزون الآمن. الكمية الحالية: {$product->total_stock}")
-                    ->danger()
-                    ->sendToDatabase($allUsers);
-
-                // Mark the product as notified to prevent spam
-                $this->line("Notification sent for product: {$product->name}");
-                Log::info("Low stock notification sent for Product ID: {$product->id}");
-            }
-            // Send notifications and emails
-            foreach ($allUsers as $user) {
-                // Send a single summary email to the user
-                Mail::to($user)->send(new LowStockSummaryMail($lowStockProducts));
-                $this->line("Email Send : {$user->email} .");
-            }
-
-            $this->line("Notifications and emails sent to {$allUsers->count()} users.");
-
-            // Mark all products as notified in a single query for efficiency
-            Product::whereIn('id', $lowStockProducts->pluck('id'))
-                ->update(['low_stock_notified_at' => now()]);
-
-            Log::info("Low stock notifications sent for Product IDs: " . $lowStockProducts->pluck('id')->implode(', '));
-        } else {
-            $this->info('No new low-stock products found.');
+        if ($lowStockProducts->isEmpty()) {
+            $this->info('لا توجد منتجات جديدة منخفضة المخزون.');
+            $this->checkRestockedProducts(); // فحص المنتجات التي تم إعادة تعبئتها
+            return self::SUCCESS;
         }
 
-        // --- 2. Reset notification for products that are restocked ---
+        $allUsers = User::role(['مدير', 'super_admin'])->get();
+
+        if ($allUsers->isEmpty()) {
+            $this->warn('لا يوجد مدراء لإرسال التنبيهات إليهم.');
+            return self::FAILURE;
+        }
+
+        $this->info("تم العثور على {$lowStockProducts->count()} منتج مخزونه منخفض.");
+
+        // إرسال تنبيهات Filament (تظهر في جرس التنبيهات بالموقع)
+        foreach ($lowStockProducts as $product) {
+            Notification::make()
+                ->title('تنبيه: انخفاض مخزون منتج')
+                ->danger()
+                ->icon('heroicon-o-shopping-cart')
+                ->body("المنتج: {$product->name}\nالكمية الحالية: {$product->actual_total_stock}\nحد الأمان: {$product->security_stock}")
+                ->sendToDatabase($allUsers);
+        }
+
+        // إرسال إيميل ملخص لكل مدير (إيميل واحد يحتوي كل المنتجات بدلاً من إيميل لكل منتج)
+        foreach ($allUsers as $user) {
+            try {
+                Mail::to($user)->send(new LowStockSummaryMail($lowStockProducts));
+                $this->line("تم إرسال الإيميل إلى: {$user->email}");
+            } catch (\Exception $e) {
+                Log::error("فشل إرسال إيميل لـ {$user->email}: " . $e->getMessage());
+            }
+        }
+
+        // تحديث التاريخ لعدم إرسال التنبيه مرة أخرى حتى يتم الشحن
+        Product::whereIn('id', $lowStockProducts->pluck('id'))
+            ->update(['low_stock_notified_at' => now()]);
+
+        $this->checkRestockedProducts();
+
+        $this->info('تمت عملية الفحص بنجاح.');
+        return self::SUCCESS;
+    }
+
+    /**
+     * إعادة تعيين التاريخ للمنتجات التي تم تزويد مخزونها
+     */
+    protected function checkRestockedProducts()
+    {
         $restockedProductIds = Product::query()
-            ->whereRaw('COALESCE((select sum(total_quantity) from branch_product where product_id = products.id), 0) > security_stock')
             ->whereNotNull('low_stock_notified_at')
+            ->whereRaw('COALESCE((select sum(new_quantity + used_quantity) from branch_product where product_id = products.id), 0) > security_stock')
             ->pluck('id');
 
         if ($restockedProductIds->isNotEmpty()) {
-            $updatedCount = Product::whereIn('id', $restockedProductIds)->update(['low_stock_notified_at' => null]);
-            $this->info("Reset notification flag for {$updatedCount} restocked products.");
-            Log::info("Reset notification flag for {$updatedCount} restocked products.");
+            Product::whereIn('id', $restockedProductIds)->update(['low_stock_notified_at' => null]);
+            $this->info("تم إعادة تفعيل التنبيهات لـ {$restockedProductIds->count()} منتج تم شحنها.");
         }
-
-        $this->info('Stock level check complete.');
-        return self::SUCCESS;
     }
 }

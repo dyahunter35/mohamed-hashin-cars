@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'name' => 'OMT Import & Export Company',
+    'name' => 'Al-Istiqama for Auto Spare Parts Trading',
 ];

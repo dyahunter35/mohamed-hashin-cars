@@ -18,9 +18,18 @@ class ProductQty extends BaseWidget
         $used_quantity = $pivot->used_quantity ?? 0;
         $total_quantity = $pivot->total_quantity ?? 0;
         return [
-            Stat::make('New', $new_quantity),
-            Stat::make('Used', $used_quantity),
-            Stat::make('Total', $total_quantity),
+            Stat::make('New', $new_quantity)
+                ->color('success')
+                ->icon('heroicon-o-sparkles')
+                ->label(__('order.fields.condition.options.new')),
+            Stat::make('Used', $used_quantity)
+                ->color('warning')
+                ->icon('heroicon-o-wrench-screwdriver')
+                ->label(__('order.fields.condition.options.used')),
+            Stat::make('Total', $total_quantity)
+                ->color('info')
+                ->icon('heroicon-o-archive-box')
+                ->label(__('order.fields.condition.options.total')),
         ];
     }
 }

@@ -14,7 +14,7 @@ class ListProducts extends ListRecords
     {
         return [
 
-            Actions\Action::make('report')
+            /* Actions\Action::make('report')
                 ->label(__('product.actions.report.label'))
                 ->icon(__('heroicon-o-document'))
                 ->color('info')
@@ -25,7 +25,7 @@ class ListProducts extends ListRecords
                 ->label(__('product.actions.branch_report.label'))
                 ->icon(__('heroicon-m-printer'))
                 ->color('success')
-                ->url(ProductResource::getUrl('branch')),
+                ->url(ProductResource::getUrl('branch')), */
 
             Actions\CreateAction::make(),
         ];

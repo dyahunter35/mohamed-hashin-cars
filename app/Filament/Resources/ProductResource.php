@@ -199,6 +199,12 @@ class ProductResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(
+                fn() => parent::getEloquentQuery()
+                    ->with(['branches']) // تحميل مسبق للعلاقة
+                    ->withSum('branches as total_new_stock', 'branch_product.new_quantity')
+                    ->withSum('branches as total_used_stock', 'branch_product.used_quantity')
+            )
             ->columns([
                     Tables\Columns\SpatieMediaLibraryImageColumn::make('product-image')
                         ->label(__('product.columns.image.label'))
@@ -341,8 +347,11 @@ class ProductResource extends Resource
             'index' => Pages\ListProducts::route('/'),
             'create' => Pages\CreateProduct::route('/create'),
             'edit' => Pages\EditProduct::route('/{record}/edit'),
-            'report' => Pages\ProductStockReport::route('/report'),
-            'branch' => Pages\BranchReport::route('/branch-report'),
+            //'report' => Pages\ProductStockReport::route('/report'),
+            //'branch' => Pages\BranchReport::route('/branch-report'),
+            //'condition-report' => Pages\StockConditionReport::route('/condition-report'),
+            //'sales-condition-report' => Pages\SalesByConditionReport::route('/sales-condition-report'),
+            //'low-stock-alert' => Pages\LowStockAlertReport::route('/low-stock-alert'),
         ];
     }
 }

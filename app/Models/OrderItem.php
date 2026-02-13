@@ -22,4 +22,8 @@ class OrderItem extends Model
                 $query->where('branches.id', Filament::getTenant()->id);
             }) */ ;
     }
+    public function order(): BelongsTo
+    {
+        return $this->belongsTo(Order::class);
+    }
 }
