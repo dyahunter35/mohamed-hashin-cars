@@ -12,7 +12,13 @@
         body {
             font-family: 'Tajawal', sans-serif;
             scroll-behavior: smooth;
+
         }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
 
         .hero-gradient {
             background: linear-gradient(rgba(17, 24, 39, 0.85), rgba(17, 24, 39, 0.85)), url('https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?q=80&w=1600&auto=format&fit=crop');
@@ -449,7 +455,8 @@
                                                     قطع غيار جديدة</div>
                                             </td>
                                             <td class="py-6 px-6 text-gray-500 text-sm leading-relaxed">المنطقة الصناعية
-                                                <br> جوار مطاحن الغلال</td>
+                                                <br> جوار مطاحن الغلال
+                                            </td>
                                             <td class="py-6 px-6">
                                                 <div class="flex items-center justify-center gap-2">
                                                     <a href="tel:+249900000001"
@@ -484,7 +491,8 @@
                                                     فرع شامل</div>
                                             </td>
                                             <td class="py-6 px-6 text-gray-500 text-sm leading-relaxed">السوق الكبير
-                                                <br> شرق الجامع</td>
+                                                <br> شرق الجامع
+                                            </td>
                                             <td class="py-6 px-6">
                                                 <div class="flex items-center justify-center gap-2">
                                                     <a href="tel:+249900000002"

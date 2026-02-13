@@ -54,6 +54,11 @@ class BranchReport extends Page implements HasForms
                         ->label(__('product.fields.branch.label'))
                         ->options(Branch::all()->pluck('name', 'id'))
                         ->required()
+                        ->afterStateUpdated(fn($state) => [
+                            $this->branch->id => $state,
+                            $this->branch = Branch::find($this->branch_id),
+                            $this->getViewData()
+                        ])
                         ->default($this->branch_id),
                 ])
         ;
