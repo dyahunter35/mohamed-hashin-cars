@@ -91,8 +91,32 @@ class ProductResource extends Resource
                                                 ->unique(Product::class, 'barcode', ignoreRecord: true),
                                             Forms\Components\MarkdownEditor::make('description')
                                                 ->label(__('product.fields.description.label'))
+
                                                 ->placeholder(__('product.fields.description.placeholder'))
                                                 ->columnSpan('full'),
+
+
+                                            Forms\Components\Select::make('brand_id')
+                                                ->label(__('product.fields.brand.label'))
+                                                ->placeholder(__('product.fields.brand.placeholder'))
+                                                ->relationship('brand', 'name')
+                                                ->preload()
+                                                ->required(),
+
+                                            Forms\Components\Select::make('branches')
+                                                ->label(__('product.fields.branch.label'))
+                                                ->placeholder(__('product.fields.branch.placeholder'))
+                                                ->relationship('branches', 'name')
+                                                ->multiple()
+                                                ->preload()
+                                                ->searchable(),
+
+                                            Forms\Components\Select::make('category_id')
+                                                ->label(__('product.fields.category.label'))
+                                                ->placeholder(__('product.fields.category.placeholder'))
+                                                ->relationship('category', 'name')
+                                                ->preload()
+                                                ->required(),
                                         ])
                                     ->columns(2),
 
@@ -177,23 +201,7 @@ class ProductResource extends Resource
                                                 ->required(),
                                         ]),
 
-                                Forms\Components\Section::make(__('product.sections.associations.label'))
-                                    ->schema([
-                                            Forms\Components\Select::make('branches')
-                                                ->label(__('product.fields.branch.label'))
-                                                ->placeholder(__('product.fields.branch.placeholder'))
-                                                ->relationship('branches', 'name')
-                                                ->multiple()
-                                                ->preload()
-                                                ->searchable(),
 
-                                            Forms\Components\Select::make('category_id')
-                                                ->label(__('product.fields.category.label'))
-                                                ->placeholder(__('product.fields.category.placeholder'))
-                                                ->relationship('category', 'name')
-                                                ->preload()
-                                                ->required(),
-                                        ]),
                             ])
                         ->columnSpan(['lg' => 1]),
                 ])

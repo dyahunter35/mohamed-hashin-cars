@@ -196,6 +196,11 @@ return [
             'label' => 'This Branch Report',
         ],
 
+        'brand' => [
+            'label' => 'Brand',
+            'placeholder' => 'Select a brand',
+        ],
+
         'print' => [
             'label' => 'Print Report',
         ],

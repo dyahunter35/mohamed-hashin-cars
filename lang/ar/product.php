@@ -58,6 +58,10 @@ return [
             'placeholder' => 'أدخل تكلفة القطعة',
             'helper' => 'لن يرى العملاء هذا السعر.',
         ],
+        'brand' => [
+            'label' => 'الماركة',
+            'placeholder' => 'أدخل الماركة',
+        ],
         'sku' => [
             'label' => 'SKU (وحدة حفظ المخزون)',
             'placeholder' => 'أدخل SKU',
