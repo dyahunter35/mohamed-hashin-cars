@@ -39,14 +39,14 @@ class CreateOrder extends CreateRecord
                 $product = Product::find($item->product_id);
 
                 // Final check for stock before deduction
-                if (!$inventoryService->isAvailableInBranch($product, $currentBranch, $item->qty, $order->condition)) {
+                if (!$inventoryService->isAvailableInBranch($product, $currentBranch, $item->qty, $item->condition instanceof \App\Enums\ItemCondition ? $item->condition : \App\Enums\ItemCondition::from($item->condition))) {
                     Notification::make()
                         ->title(__('order.actions.create.notifications.stock.title'))
                         ->body(__('order.actions.create.notifications.stock.message', ['product' => $product->name]))
                         ->danger()
                         ->send();
-                    //throw new \Exception("Stock not available for {$product->name}.");
-                    return;
+
+                    throw new Halt();
                 }
 
                 // Deduct the stock

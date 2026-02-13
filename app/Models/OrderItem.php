@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ItemCondition;
 use Filament\Facades\Filament;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

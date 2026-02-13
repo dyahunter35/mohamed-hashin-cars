@@ -543,7 +543,47 @@ class OrderResource extends Resource
 
                                 DecimalInput::make('qty')
                                     ->columnSpan(1)
-                                    ->label(__('order.fields.items.qty.label')),
+                                    ->label(__('order.fields.items.qty.label'))
+                                    ->rules([
+                                            fn(Get $get): \Closure => function (string $attribute, $value, \Closure $fail) use ($get) {
+                                                $productId = $get('product_id');
+                                                $condition = $get('condition');
+                                                $orderStatus = $get('../../status');
+
+                                                if (!$productId || !$value || $orderStatus === OrderStatus::Cancelled->value) {
+                                                    return;
+                                                }
+
+                                                $product = Product::find($productId);
+                                                if (!$product) {
+                                                    return;
+                                                }
+
+                                                $inventoryService = new \App\Services\InventoryService();
+                                                $currentBranch = Filament::getTenant();
+                                                $requestedQty = (int) $value;
+
+                                                // If editing, we should account for the quantity already in this order
+                                                $currentOrderQty = 0;
+                                                $record = $get('../../id'); // In Edit mode, we might have the record ID
+                                    
+                                                // A more reliable way in Filament to check if we are in Edit mode
+                                                $livewire = $get('../../');
+                                                // This is a bit tricky in static form() method, 
+                                                // but we can try to find the original record if it exists.
+                                    
+                                                $isAvailable = $inventoryService->isAvailableInBranch(
+                                                    $product,
+                                                    $currentBranch,
+                                                    $requestedQty,
+                                                    $condition instanceof ItemCondition ? $condition : ItemCondition::from($condition ?? 'new')
+                                                );
+
+                                                if (!$isAvailable) {
+                                                    $fail(__('order.actions.create.notifications.stock.message', ['product' => $product->name]));
+                                                }
+                                            },
+                                        ]),
 
                                 DecimalInput::make('sub_discount')
                                     ->label(__('order.fields.items.sub_discount.label'))

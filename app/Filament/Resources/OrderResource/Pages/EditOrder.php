@@ -98,20 +98,20 @@ class EditOrder extends EditRecord
 
             foreach ($newItemsFromDB as $newItem) {
                 $product = Product::find($newItem->product_id);
-                /* if (!$inventoryService->isAvailableInBranch($product, $currentBranch, $newItem->qty)) {
+                if (!$inventoryService->isAvailableInBranch($product, $currentBranch, $newItem->qty, $newItem->condition instanceof \App\Enums\ItemCondition ? $newItem->condition : (\App\Enums\ItemCondition::tryFrom($newItem->condition) ?? \App\Enums\ItemCondition::New))) {
                     Notification::make()
                         ->title(__('order.actions.create.notifications.stock.title'))
                         ->body(__('order.actions.create.notifications.stock.message', ['product' => $product->name]))
                         ->danger()
                         ->send();
-                    throw new Halt('Stock not available, transaction rolled back.');
-                } */
+                    throw new Halt();
+                }
 
                 $inventoryService->deductStockForBranch(
                     $product,
                     $currentBranch,
                     $newItem->qty,
-                    $item->condition,
+                    $newItem->condition instanceof \App\Enums\ItemCondition ? $newItem->condition : (\App\Enums\ItemCondition::tryFrom($newItem->condition) ?? \App\Enums\ItemCondition::New),
                     "Order Update #{$record->number}",
                     $currentUser
                 );
