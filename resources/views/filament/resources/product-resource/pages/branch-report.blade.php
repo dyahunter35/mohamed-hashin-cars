@@ -4,11 +4,18 @@
 
   <x-filament-panels::page>
 
+  <x-filament::section class="mb-4 shadow-sm no-print border-slate-200">
+        <div class="flex flex-col gap-4 md:flex-row md:items-end">
+            <div class="flex-1">{{ $this->form }}</div>
+            <x-filament::button wire:click="updateQty" color="gray"
+                icon="heroicon-m-arrow-path">تحديث الكميات</x-filament::button>
+        </div>
+    </x-filament::section>
       <div class="text-gray-800">
 
           <!-- Main Container -->
           <main class="w-full  mx-auto p-4 sm:p-6 md:p-8 m-4" id="report-content">
-
+              <x-report-header label="تقرير المنتجات للفروع" :value="$branch->name" />
               <!-- Report Card -->
               <div class="bg-white shadow-lg rounded-xl overflow-hidden">
 

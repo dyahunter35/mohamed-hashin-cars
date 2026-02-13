@@ -13,11 +13,72 @@
 <?php endif; ?>
 <?php $component->withAttributes([]); ?>
 
+  <?php if (isset($component)) { $__componentOriginalee08b1367eba38734199cf7829b1d1e9 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalee08b1367eba38734199cf7829b1d1e9 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'filament::components.section.index','data' => ['class' => 'mb-4 shadow-sm no-print border-slate-200']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('filament::section'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['class' => 'mb-4 shadow-sm no-print border-slate-200']); ?>
+        <div class="flex flex-col gap-4 md:flex-row md:items-end">
+            <div class="flex-1"><?php echo e($this->form); ?></div>
+            <?php if (isset($component)) { $__componentOriginal6330f08526bbb3ce2a0da37da512a11f = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal6330f08526bbb3ce2a0da37da512a11f = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'filament::components.button.index','data' => ['wire:click' => 'updateQty','color' => 'gray','icon' => 'heroicon-m-arrow-path']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('filament::button'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['wire:click' => 'updateQty','color' => 'gray','icon' => 'heroicon-m-arrow-path']); ?>تحديث الكميات <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal6330f08526bbb3ce2a0da37da512a11f)): ?>
+<?php $attributes = $__attributesOriginal6330f08526bbb3ce2a0da37da512a11f; ?>
+<?php unset($__attributesOriginal6330f08526bbb3ce2a0da37da512a11f); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal6330f08526bbb3ce2a0da37da512a11f)): ?>
+<?php $component = $__componentOriginal6330f08526bbb3ce2a0da37da512a11f; ?>
+<?php unset($__componentOriginal6330f08526bbb3ce2a0da37da512a11f); ?>
+<?php endif; ?>
+        </div>
+     <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalee08b1367eba38734199cf7829b1d1e9)): ?>
+<?php $attributes = $__attributesOriginalee08b1367eba38734199cf7829b1d1e9; ?>
+<?php unset($__attributesOriginalee08b1367eba38734199cf7829b1d1e9); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalee08b1367eba38734199cf7829b1d1e9)): ?>
+<?php $component = $__componentOriginalee08b1367eba38734199cf7829b1d1e9; ?>
+<?php unset($__componentOriginalee08b1367eba38734199cf7829b1d1e9); ?>
+<?php endif; ?>
       <div class="text-gray-800">
 
           <!-- Main Container -->
           <main class="w-full  mx-auto p-4 sm:p-6 md:p-8 m-4" id="report-content">
-
+              <?php if (isset($component)) { $__componentOriginalba70b7059b726609ea102a7adde151ac = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalba70b7059b726609ea102a7adde151ac = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.report-header','data' => ['label' => 'تقرير المنتجات للفروع','value' => $branch->name]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('report-header'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['label' => 'تقرير المنتجات للفروع','value' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($branch->name)]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalba70b7059b726609ea102a7adde151ac)): ?>
+<?php $attributes = $__attributesOriginalba70b7059b726609ea102a7adde151ac; ?>
+<?php unset($__attributesOriginalba70b7059b726609ea102a7adde151ac); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalba70b7059b726609ea102a7adde151ac)): ?>
+<?php $component = $__componentOriginalba70b7059b726609ea102a7adde151ac; ?>
+<?php unset($__componentOriginalba70b7059b726609ea102a7adde151ac); ?>
+<?php endif; ?>
               <!-- Report Card -->
               <div class="bg-white shadow-lg rounded-xl overflow-hidden">
 

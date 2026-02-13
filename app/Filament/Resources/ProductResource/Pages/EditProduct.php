@@ -5,10 +5,10 @@ namespace App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource;
 use App\Filament\Resources\ProductResource\Widgets\ProductQty;
 use Filament\Actions;
+use Filament\Actions\Action;
 use Filament\Resources\Pages\EditRecord;
 use App\Services\InventoryService;
 use App\Enums\ItemCondition;
-use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Notifications\Notification;
@@ -35,8 +35,6 @@ class EditProduct extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-
-
             Action::make('moveToUsed')
                 ->label('نقل للمستعمل')
                 ->icon('heroicon-o-arrow-path')

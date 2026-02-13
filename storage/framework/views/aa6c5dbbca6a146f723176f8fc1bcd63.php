@@ -13,7 +13,26 @@
 
         <!-- Main Container -->
         <main class="w-full max-w-7xl mx-auto p-4 sm:p-6 md:p-8 m-4" id="report-content">
-
+            <?php if (isset($component)) { $__componentOriginalba70b7059b726609ea102a7adde151ac = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalba70b7059b726609ea102a7adde151ac = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.report-header','data' => ['label' => 'تقرير المخزون حسب الحالة']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('report-header'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['label' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute('تقرير المخزون حسب الحالة')]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalba70b7059b726609ea102a7adde151ac)): ?>
+<?php $attributes = $__attributesOriginalba70b7059b726609ea102a7adde151ac; ?>
+<?php unset($__attributesOriginalba70b7059b726609ea102a7adde151ac); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalba70b7059b726609ea102a7adde151ac)): ?>
+<?php $component = $__componentOriginalba70b7059b726609ea102a7adde151ac; ?>
+<?php unset($__componentOriginalba70b7059b726609ea102a7adde151ac); ?>
+<?php endif; ?>
             <!-- Report Card -->
             <div class="bg-white shadow-lg rounded-xl overflow-hidden">
 

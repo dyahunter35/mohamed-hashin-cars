@@ -22,7 +22,7 @@ class HistoryRelationManager extends RelationManager
 
     public static function getTitle(Model $ownerRecord, string $pageClass): string
     {
-        $quantity = (auth()->user()->hasAnyRole(['مدير', 'super_admin'])) ? ' (' . $ownerRecord->total_stock  . ')' : '';
+        $quantity = (auth()->user()->hasAnyRole(['مدير', 'super_admin'])) ? ' (' . $ownerRecord->total_stock . ')' : '';
         return __('stock_history.label.plural') . $quantity;
     }
 
@@ -40,26 +40,26 @@ class HistoryRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('type')
-                    ->label(__('stock_history.fields.type.label'))
-                    ->options(StockCase::class)
-                    ->required(),
+                    Forms\Components\Select::make('type')
+                        ->label(__('stock_history.fields.type.label'))
+                        ->options(StockCase::class)
+                        ->required(),
 
-                Forms\Components\TextInput::make('quantity_change')
-                    ->label(__('stock_history.fields.quantity_change.label'))
-                    ->placeholder(__('stock_history.fields.quantity_change.placeholder'))
-                    ->numeric()
-                    ->required()
-                    ->minValue(1),
+                    Forms\Components\TextInput::make('quantity_change')
+                        ->label(__('stock_history.fields.quantity_change.label'))
+                        ->placeholder(__('stock_history.fields.quantity_change.placeholder'))
+                        ->numeric()
+                        ->required()
+                        ->minValue(1),
 
-                Forms\Components\Textarea::make('notes')
-                    ->label(__('stock_history.fields.notes.label'))
-                    ->columnSpanFull(),
+                    Forms\Components\Textarea::make('notes')
+                        ->label(__('stock_history.fields.notes.label'))
+                        ->columnSpanFull(),
 
-                Forms\Components\Hidden::make('branch_id')
-                    ->default(Filament::getTenant()->id)
+                    Forms\Components\Hidden::make('branch_id')
+                        ->default(Filament::getTenant()->id)
 
-            ]);
+                ]);
     }
 
     public function table(Table $table): Table
@@ -67,80 +67,85 @@ class HistoryRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('type')
             ->columns([
-                Tables\Columns\TextColumn::make('created_at')
-                    ->label(__('stock_history.fields.created_at.label'))
-                    ->dateTime('Y-m-d H:i:s')
-                    ->sortable(),
+                    Tables\Columns\TextColumn::make('created_at')
+                        ->label(__('stock_history.fields.created_at.label'))
+                        ->dateTime('Y-m-d H:i:s')
+                        ->sortable(),
 
-                Tables\Columns\TextColumn::make('type')
-                    ->label(__('stock_history.fields.type.label'))
-                    ->badge(),
+                    Tables\Columns\TextColumn::make('type')
+                        ->label(__('stock_history.fields.type.label'))
+                        ->badge(),
 
-                Tables\Columns\TextColumn::make('quantity_change')
-                    ->label(__('stock_history.fields.quantity_change.label')),
+                    Tables\Columns\TextColumn::make('condition')
+                        ->label(__('order.fields.condition.label')),
 
-                /*  Tables\Columns\TextColumn::make('new_quantity')
-                    ->label(__('stock_history.fields.quantity_after_change.label')), */
 
-                Tables\Columns\TextColumn::make('user.name')
-                    ->label(__('stock_history.fields.user.label'))
-                    ->placeholder('N/A'),
+                    Tables\Columns\TextColumn::make('quantity_change')
+                        ->label(__('stock_history.fields.quantity_change.label')),
 
-                Tables\Columns\TextColumn::make('notes')
-                    ->label(__('stock_history.fields.notes.label')),
-            ])
+
+                    /*  Tables\Columns\TextColumn::make('new_quantity')
+                        ->label(__('stock_history.fields.quantity_after_change.label')), */
+
+                    Tables\Columns\TextColumn::make('user.name')
+                        ->label(__('stock_history.fields.user.label'))
+                        ->placeholder('N/A'),
+
+                    Tables\Columns\TextColumn::make('notes')
+                        ->label(__('stock_history.fields.notes.label')),
+                ])
             ->filters([
-                //
-            ])
+                    //
+                ])
             ->headerActions([
-                // This uses the form defined above to create a new record
-                Tables\Actions\CreateAction::make()
-                    ->visible(fn() => $this->ownerRecord->branches()->where('branch_id', Filament::getTenant()->id)->exists())
-                    ->using(function (array $data, RelationManager $livewire): Model {
-                        $inventoryService = new InventoryService();
-                        $product = $livewire->getOwnerRecord();
-                        $branch = Filament::getTenant(); // افتراض أنك تعمل داخل tenant
-                        $user = Auth::user();
+                    // This uses the form defined above to create a new record
+                    Tables\Actions\CreateAction::make()
+                        ->visible(fn() => $this->ownerRecord->branches()->where('branch_id', Filament::getTenant()->id)->exists())
+                        ->using(function (array $data, RelationManager $livewire): Model {
+                            $inventoryService = new InventoryService();
+                            $product = $livewire->getOwnerRecord();
+                            $branch = Filament::getTenant(); // افتراض أنك تعمل داخل tenant
+                            $user = Auth::user();
 
-                        if ($data['type'] === 'increase' || $data['type'] === 'initial') {
-                            return $inventoryService->addStockForBranch(
-                                $product,
-                                $branch,
-                                $data['quantity_change'],
-                                $data['notes'],
-                                $user
-                            );
-                        } else {
-                            // يمكنك إضافة معالجة للـ exception هنا إذا أردت
-                            try {
-                                return $inventoryService->deductStockForBranch(
+                            if ($data['type'] === 'increase' || $data['type'] === 'initial') {
+                                return $inventoryService->addStockForBranch(
                                     $product,
                                     $branch,
                                     $data['quantity_change'],
                                     $data['notes'],
                                     $user
                                 );
-                            } catch (Exception $e) {
-                                Notification::make()
-                                    ->title('خطأ في المخزون')
-                                    ->body($e->getMessage())
-                                    ->danger()
-                                    ->send();
+                            } else {
+                                // يمكنك إضافة معالجة للـ exception هنا إذا أردت
+                                try {
+                                    return $inventoryService->deductStockForBranch(
+                                        $product,
+                                        $branch,
+                                        $data['quantity_change'],
+                                        $data['notes'],
+                                        $user
+                                    );
+                                } catch (Exception $e) {
+                                    Notification::make()
+                                        ->title('خطأ في المخزون')
+                                        ->body($e->getMessage())
+                                        ->danger()
+                                        ->send();
 
-                                throw new Halt();
+                                    throw new Halt();
+                                }
                             }
-                        }
-                    }),
-            ])
+                        }),
+                ])
             ->actions([
-                // You can add actions like Edit or Delete if needed
-                //Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-            ])
+                    // You can add actions like Edit or Delete if needed
+                    //Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+                    Tables\Actions\BulkActionGroup::make([
+                        Tables\Actions\DeleteBulkAction::make(),
+                    ]),
+                ]);
     }
 }

@@ -13,44 +13,25 @@ class LowStockAlerts extends Widget
 
     public function getLowStockProducts(): array
     {
-        // استعلام المنتجات الجديدة التي قل مخزونها عن حد الأمان الخاص بها
-        $lowStockNew = DB::table('branch_product')
+        return DB::table('branch_product')
             ->join('products', 'branch_product.product_id', '=', 'products.id')
             ->join('branches', 'branch_product.branch_id', '=', 'branches.id')
-            // استخدام whereColumn للمقارنة مع security_stock لكل منتج بشكل ديناميكي
-            ->whereColumn('branch_product.new_quantity', '<', 'products.security_stock')
-            ->where('branch_product.new_quantity', '>', 0)
-            ->select([
-                    'products.id',
-                    'products.name as product_name',
-                    'products.low_stock_notified_at', // جلب تاريخ التنبيه
-                    'products.security_stock',        // جلب حد الأمان للعرض
-                    'branches.name as branch_name',
-                    'branch_product.new_quantity as quantity',
-                    DB::raw("'new' as product_status")
-                ])
-            ->get();
-
-        // استعلام المنتجات المستعملة
-        $lowStockUsed = DB::table('branch_product')
-            ->join('products', 'branch_product.product_id', '=', 'products.id')
-            ->join('branches', 'branch_product.branch_id', '=', 'branches.id')
-            ->whereColumn('branch_product.used_quantity', '<', 'products.security_stock')
-            ->where('branch_product.used_quantity', '>', 0)
             ->select([
                     'products.id',
                     'products.name as product_name',
                     'products.low_stock_notified_at',
                     'products.security_stock',
                     'branches.name as branch_name',
-                    'branch_product.used_quantity as quantity',
-                    DB::raw("'used' as product_status")
+                    // حساب الكمية الكلية (جديد + مستعمل)
+                    DB::raw('(branch_product.new_quantity + branch_product.used_quantity) as total_quantity')
                 ])
-            ->get();
-
-        return $lowStockNew->concat($lowStockUsed)
-            ->sortBy('quantity')
+            // المقارنة: حيث المجموع أقل من حد الأمان الخاص بالمنتج
+            ->whereRaw('(branch_product.new_quantity + branch_product.used_quantity) < products.security_stock')
+            // والتأكد أن المجموع أكبر من صفر (لتجنب عرض المنتجات غير المتوفرة نهائياً إذا أردت)
+            ->whereRaw('(branch_product.new_quantity + branch_product.used_quantity) > 0')
+            ->orderBy('total_quantity')
             ->take(20)
+            ->get()
             ->map(function ($item) {
                 return (array) $item;
             })

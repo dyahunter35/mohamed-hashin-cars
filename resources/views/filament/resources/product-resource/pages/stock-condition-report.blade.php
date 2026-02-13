@@ -4,7 +4,7 @@
 
         <!-- Main Container -->
         <main class="w-full max-w-7xl mx-auto p-4 sm:p-6 md:p-8 m-4" id="report-content">
-
+            <x-report-header :label="'تقرير المخزون حسب الحالة'" />
             <!-- Report Card -->
             <div class="bg-white shadow-lg rounded-xl overflow-hidden">
 

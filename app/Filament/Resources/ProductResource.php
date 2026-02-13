@@ -84,6 +84,11 @@ class ProductResource extends Resource
                                                 ->required()
                                                 ->unique(Product::class, 'slug', ignoreRecord: true),
 
+                                            //barcode
+                                            Forms\Components\TextInput::make('barcode')
+                                                ->label(__('product.fields.barcode.label'))
+                                                ->placeholder(__('product.fields.barcode.placeholder'))
+                                                ->unique(Product::class, 'barcode', ignoreRecord: true),
                                             Forms\Components\MarkdownEditor::make('description')
                                                 ->label(__('product.fields.description.label'))
                                                 ->placeholder(__('product.fields.description.placeholder'))
@@ -267,28 +272,28 @@ class ProductResource extends Resource
                         ->searchable()
                         ->sortable()
                         ->color(fn($record) => $record->total_stock > $record->security_stock ? 'success' : 'danger')
-                        ->visible(fn() => !auth()->user()->hasRole('بائع'))
+                        ->visible(fn() => auth()->user()->hasRole('admin'))
                         ->toggleable(),
 
                     Tables\Columns\TextColumn::make('total_new_stock')
                         ->label('إجمالي الجديد')
                         ->badge()
                         ->color('info')
-                        ->visible(fn() => !auth()->user()->hasRole('بائع'))
+                        ->visible(fn() => auth()->user()->hasRole('admin'))
                         ->toggleable(),
 
                     Tables\Columns\TextColumn::make('total_used_stock')
                         ->label('إجمالي المستعمل')
                         ->badge()
                         ->color('warning')
-                        ->visible(fn() => !auth()->user()->hasRole('بائع'))
+                        ->visible(fn() => auth()->user()->hasRole('admin'))
                         ->toggleable(),
 
                     Tables\Columns\TextColumn::make('branches.name')
                         ->label(__('product.columns.branch.label'))
                         ->searchable()
                         ->badge()
-                        ->visible(fn() => !auth()->user()->hasRole('بائع'))
+                        ->visible(fn() => auth()->user()->hasRole('admin'))
                         ->sortable(),
 
                     Tables\Columns\TextColumn::make('published_at')
