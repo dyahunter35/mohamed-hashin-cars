@@ -27,6 +27,15 @@ return [
         'status_and_totals' => [
             'label' => 'Status',
         ],
+        'condition' => [
+            'label' => 'Condition',
+            'placeholder' => 'Select condition',
+            'options' => [
+                'new' => 'New',
+                'used' => 'Used',
+                'total' => 'Total'
+            ]
+        ],
 
         'totals' => [
             'label' => 'Order Totals',
@@ -157,8 +166,8 @@ return [
                 'refund' => 'Money Back',
             ],
         ],
-        'amount'=>[
-            'label'=>'Amount'
+        'amount' => [
+            'label' => 'Amount'
         ]
     ],
     'actions' => [
@@ -174,11 +183,11 @@ return [
                 'heading' => 'Create Order',
                 'submit' => 'Create',
             ],
-            'notifications'=>[
-                'at_least_one'=>'Order must have at least one item.',
-                'stock'=>[
-                    'title'=>'Stock Error',
-                    'message'=> 'The requested quantity for `:product` is not available.'
+            'notifications' => [
+                'at_least_one' => 'Order must have at least one item.',
+                'stock' => [
+                    'title' => 'Stock Error',
+                    'message' => 'The requested quantity for `:product` is not available.'
                 ]
             ]
         ],
@@ -213,11 +222,11 @@ return [
             ],
         ],
     ],
-    'invoice'=>[
+    'invoice' => [
 
-        'labels'=>[
-            'today'=> 'Today',
-            'subtotal'=> 'Before Discount'
+        'labels' => [
+            'today' => 'Today',
+            'subtotal' => 'Before Discount'
         ]
     ]
 ];
