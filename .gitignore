@@ -21,3 +21,14 @@ yarn-error.log
 /.vscode
 /.zed
 Archive.zip
+
+# Laravel
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/testing/*
+/storage/framework/views/*
+/storage/logs/*
+
+# OS Files
+.DS_Store
+Thumbs.db
