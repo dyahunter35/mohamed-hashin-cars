@@ -158,6 +158,17 @@
       0 => 'Livewire\\LivewireServiceProvider',
     ),
   ),
+  'malzariey/filament-daterangepicker-filter' => 
+  array (
+    'aliases' => 
+    array (
+      'FilamentDaterangepickerFilter' => 'Malzariey\\FilamentDaterangepickerFilter\\Facades\\FilamentDaterangepickerFilter',
+    ),
+    'providers' => 
+    array (
+      0 => 'Malzariey\\FilamentDaterangepickerFilter\\FilamentDaterangepickerFilterServiceProvider',
+    ),
+  ),
   'marjose123/filament-lockscreen' => 
   array (
     'providers' => 

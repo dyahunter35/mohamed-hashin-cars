@@ -25,7 +25,7 @@ class ProductStockReport extends Page
     // اسم الصفحة في قائمة التنقل
     protected static ?string $navigationLabel = 'تقرير مخزون المنتجات';
 
-    protected static bool $shouldRegisterNavigation = true;
+    protected static bool $shouldRegisterNavigation = false;
 
     // --- NAVIGATION ---
     public function getTitle(): string|Htmlable

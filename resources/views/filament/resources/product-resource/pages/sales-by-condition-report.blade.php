@@ -1,188 +1,167 @@
 <x-filament-panels::page>
+    {{-- قسم الفلترة - يختفي عند الطباعة --}}
+    <x-filament::section class="mb-4 shadow-sm no-print border-slate-200">
+        <div class="flex flex-col gap-4 md:flex-row md:items-end">
+            <div class="flex-1">
+                {{ $this->form }}
+            </div>
+            <x-filament::button wire:click="$refresh" color="gray" icon="heroicon-m-arrow-path">
+                تحديث البيانات
+            </x-filament::button>
+        </div>
+    </x-filament::section>
 
     <div class="text-gray-800">
-
-        <!-- Main Container -->
         <main class="w-full max-w-7xl mx-auto p-4 sm:p-6 md:p-8 m-4" id="report-content">
-
-            <!-- Report Card -->
+            
             <x-report-header :label="'تقرير المبيعات حسب حالة المنتجات'" />
 
-            <div class="bg-white shadow-lg rounded-xl overflow-hidden">
-
-                <!-- Table Container -->
+            <div class="bg-white shadow-lg rounded-xl overflow-hidden border border-gray-200">
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm text-right text-gray-600">
-                        <!-- Table Head -->
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-b border-gray-200">
                             <tr>
-                                <th scope="col" class="px-6 py-4 font-semibold" rowspan="2">المنتج</th>
+                                <th scope="col" class="px-6 py-4 font-bold text-base" rowspan="2">المنتج</th>
                                 <th scope="col" class="px-6 py-4 font-semibold" rowspan="2">الفئة</th>
-                                <th scope="col" class="px-4 py-2 font-semibold text-center border-l border-gray-300"
-                                    colspan="3">
+                                <th scope="col" class="px-4 py-2 font-semibold text-center border-l border-gray-300 bg-blue-50/50" colspan="3">
                                     المنتجات الجديدة
                                 </th>
-                                <th scope="col" class="px-4 py-2 font-semibold text-center border-l border-gray-300"
-                                    colspan="3">
+                                <th scope="col" class="px-4 py-2 font-semibold text-center border-l border-gray-300 bg-orange-50/50" colspan="3">
                                     المنتجات المستعملة
                                 </th>
-                                <th scope="col" class="px-4 py-2 font-semibold text-center bg-blue-50" colspan="3">
-                                    الإجمالي</th>
+                                <th scope="col" class="px-4 py-2 font-semibold text-center bg-gray-100" colspan="3">
+                                    الإجمالي الكلي
+                                </th>
                             </tr>
-                            <tr class="bg-gray-100">
-                                <!-- New Products -->
-                                <th class="px-2 py-2 text-xs text-center">الكمية</th>
-                                <th class="px-2 py-2 text-xs text-center">الإيراد</th>
-                                <th class="px-2 py-2 text-xs text-center border-l border-gray-300">الطلبات</th>
-                                <!-- Used Products -->
-                                <th class="px-2 py-2 text-xs text-center">الكمية</th>
-                                <th class="px-2 py-2 text-xs text-center">الإيراد</th>
-                                <th class="px-2 py-2 text-xs text-center border-l border-gray-300">الطلبات</th>
-                                <!-- Totals -->
-                                <th class="px-2 py-2 text-xs text-center bg-blue-100">الكمية</th>
-                                <th class="px-2 py-2 text-xs text-center bg-blue-100">الإيراد</th>
-                                <th class="px-2 py-2 text-xs text-center bg-blue-100">الطلبات</th>
+                            <tr class="bg-gray-100/50">
+                                <th class="px-2 py-2 text-center border-r border-gray-200">الكمية</th>
+                                <th class="px-2 py-2 text-center">الإيراد</th>
+                                <th class="px-2 py-2 text-center border-l border-gray-300">الطلبات</th>
+                                <th class="px-2 py-2 text-center">الكمية</th>
+                                <th class="px-2 py-2 text-center">الإيراد</th>
+                                <th class="px-2 py-2 text-center border-l border-gray-300">الطلبات</th>
+                                <th class="px-2 py-2 text-center bg-gray-200/50">الكمية</th>
+                                <th class="px-2 py-2 text-center bg-gray-200/50">الإيراد</th>
+                                <th class="px-2 py-2 text-center bg-gray-200/50">الطلبات</th>
                             </tr>
                         </thead>
 
-                        <!-- Table Body -->
                         <tbody>
-                            @forelse ($sales as $sale)
+                            @forelse ($this->sales as $sale)
                                 @php
-                                    $totalQty = $sale['new']['qty'] + $sale['used']['qty'];
-                                    $totalRevenue = $sale['new']['revenue'] + $sale['used']['revenue'];
-                                    $totalOrders = $sale['new']['orders'] + $sale['used']['orders'];
+                                    $rowTotalQty = $sale['new']['qty'] + $sale['used']['qty'];
+                                    $rowTotalRevenue = $sale['new']['revenue'] + $sale['used']['revenue'];
+                                    $rowTotalOrders = $sale['new']['orders'] + $sale['used']['orders'];
                                 @endphp
-                                <tr
-                                    class="bg-white border-b border-gray-200 hover:bg-gray-50 transition-colors duration-200">
-                                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                        {{ $sale['product_name'] }} -
-                                        {{ $sale['brand_name'] }}
+                                <tr class="bg-white border-b border-gray-100 hover:bg-gray-50 transition-colors duration-200">
+                                    <td class="px-6 py-4 font-medium text-gray-900">
+                                        <div class="flex flex-col">
+                                            <span class="font-bold">{{ $sale['product_name'] }}</span>
+                                            <span class="text-xs text-gray-400">{{ $sale['brand_name'] }}</span>
+                                        </div>
                                     </td>
-                                    <td class="px-6 py-4 text-gray-600">
-                                        {{ $sale['category'] ?? '-' }}
+                                    <td class="px-6 py-4 text-gray-500 italic">
+                                        {{ $sale['category'] }}
                                     </td>
 
-                                    <!-- New Products Data -->
-                                    <td class="px-2 py-4 text-center">
-                                        <span
-                                            class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-blue-100 text-blue-800">
+                                    <td class="px-2 py-4 text-center border-r border-gray-100">
+                                        <span class="px-2 py-1 rounded bg-blue-100 text-blue-800 font-medium">
                                             {{ number_format($sale['new']['qty']) }}
                                         </span>
                                     </td>
-                                    <td class="px-2 py-4 text-center text-green-700 font-semibold">
+                                    <td class="px-2 py-4 text-center font-semibold text-green-700">
                                         {{ number_format($sale['new']['revenue'], 2) }}
                                     </td>
-                                    <td class="px-2 py-4 text-center border-l border-gray-300">
+                                    <td class="px-2 py-4 text-center border-l border-gray-200 text-gray-500">
                                         {{ number_format($sale['new']['orders']) }}
                                     </td>
 
-                                    <!-- Used Products Data -->
                                     <td class="px-2 py-4 text-center">
-                                        <span
-                                            class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-orange-100 text-orange-800">
+                                        <span class="px-2 py-1 rounded bg-orange-100 text-orange-800 font-medium">
                                             {{ number_format($sale['used']['qty']) }}
                                         </span>
                                     </td>
-                                    <td class="px-2 py-4 text-center text-green-700 font-semibold">
+                                    <td class="px-2 py-4 text-center font-semibold text-green-700">
                                         {{ number_format($sale['used']['revenue'], 2) }}
                                     </td>
-                                    <td class="px-2 py-4 text-center border-l border-gray-300">
+                                    <td class="px-2 py-4 text-center border-l border-gray-200 text-gray-500">
                                         {{ number_format($sale['used']['orders']) }}
                                     </td>
 
-                                    <!-- Totals -->
-                                    <td class="px-2 py-4 text-center bg-blue-50 font-bold">
-                                        {{ number_format($totalQty) }}
+                                    <td class="px-2 py-4 text-center bg-gray-50 font-bold text-gray-900">
+                                        {{ number_format($rowTotalQty) }}
                                     </td>
-                                    <td class="px-2 py-4 text-center bg-blue-50 text-green-800 font-bold">
-                                        {{ number_format($totalRevenue, 2) }}
+                                    <td class="px-2 py-4 text-center bg-gray-50 font-bold text-green-800">
+                                        {{ number_format($rowTotalRevenue, 2) }}
                                     </td>
-                                    <td class="px-2 py-4 text-center bg-blue-50 font-bold">
-                                        {{ number_format($totalOrders) }}
+                                    <td class="px-2 py-4 text-center bg-gray-50 font-bold text-gray-700">
+                                        {{ number_format($rowTotalOrders) }}
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="11" class="px-6 py-8 text-center text-gray-500">
-                                        لا توجد مبيعات
+                                    <td colspan="11" class="px-6 py-12 text-center">
+                                        <div class="flex flex-col items-center justify-center text-gray-400">
+                                            <x-heroicon-o-inbox class="w-12 h-12 mb-2" />
+                                            <p>لا توجد بيانات مبيعات للفترة المختارة</p>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforelse
                         </tbody>
 
-                        <!-- Table Footer with Totals -->
-                        <tfoot class="bg-gray-100 font-bold">
+                        @if($this->sales->isNotEmpty())
+                        <tfoot class="bg-gray-800 text-white font-bold">
                             <tr>
-                                <td class="px-6 py-4 text-base" colspan="2">الإجمالي الكلي</td>
+                                <td class="px-6 py-4 text-base" colspan="2">الإجمالي العام للتقرير</td>
                                 @php
-                                    $grandTotalNewQty = $sales->sum('new.qty');
-                                    $grandTotalNewRevenue = $sales->sum('new.revenue');
-                                    $grandTotalNewOrders = $sales->sum('new.orders');
-                                    $grandTotalUsedQty = $sales->sum('used.qty');
-                                    $grandTotalUsedRevenue = $sales->sum('used.revenue');
-                                    $grandTotalUsedOrders = $sales->sum('used.orders');
+                                    $gNewQty = $this->sales->sum('new.qty');
+                                    $gNewRev = $this->sales->sum('new.revenue');
+                                    $gNewOrd = $this->sales->sum('new.orders');
+                                    
+                                    $gUsedQty = $this->sales->sum('used.qty');
+                                    $gUsedRev = $this->sales->sum('used.revenue');
+                                    $gUsedOrd = $this->sales->sum('used.orders');
                                 @endphp
-                                <td class="px-2 py-4 text-center bg-blue-100 text-blue-900">
-                                    {{ number_format($grandTotalNewQty) }}
-                                </td>
-                                <td class="px-2 py-4 text-center bg-blue-100 text-green-800">
-                                    {{ number_format($grandTotalNewRevenue, 2) }}
-                                </td>
-                                <td class="px-2 py-4 text-center bg-blue-100 border-l border-gray-400">
-                                    {{ number_format($grandTotalNewOrders) }}
-                                </td>
-                                <td class="px-2 py-4 text-center bg-orange-100 text-orange-900">
-                                    {{ number_format($grandTotalUsedQty) }}
-                                </td>
-                                <td class="px-2 py-4 text-center bg-orange-100 text-green-800">
-                                    {{ number_format($grandTotalUsedRevenue, 2) }}
-                                </td>
-                                <td class="px-2 py-4 text-center bg-orange-100 border-l border-gray-400">
-                                    {{ number_format($grandTotalUsedOrders) }}
-                                </td>
-                                <td class="px-2 py-4 text-center bg-gray-200 text-gray-900">
-                                    {{ number_format($grandTotalNewQty + $grandTotalUsedQty) }}
-                                </td>
-                                <td class="px-2 py-4 text-center bg-gray-200 text-green-900">
-                                    {{ number_format($grandTotalNewRevenue + $grandTotalUsedRevenue, 2) }}
-                                </td>
-                                <td class="px-2 py-4 text-center bg-gray-200 text-gray-900">
-                                    {{ number_format($grandTotalNewOrders + $grandTotalUsedOrders) }}
-                                </td>
+                                {{-- New Totals --}}
+                                <td class="px-2 py-4 text-center bg-blue-900/50">{{ number_format($gNewQty) }}</td>
+                                <td class="px-2 py-4 text-center bg-blue-900/50">{{ number_format($gNewRev, 2) }}</td>
+                                <td class="px-2 py-4 text-center bg-blue-900/50 border-l border-gray-600">{{ number_format($gNewOrd) }}</td>
+                                
+                                {{-- Used Totals --}}
+                                <td class="px-2 py-4 text-center bg-orange-900/50">{{ number_format($gUsedQty) }}</td>
+                                <td class="px-2 py-4 text-center bg-orange-900/50">{{ number_format($gUsedRev, 2) }}</td>
+                                <td class="px-2 py-4 text-center bg-orange-900/50 border-l border-gray-600">{{ number_format($gUsedOrd) }}</td>
+                                
+                                {{-- Grand Totals --}}
+                                <td class="px-2 py-4 text-center bg-black/20">{{ number_format($gNewQty + $gUsedQty) }}</td>
+                                <td class="px-2 py-4 text-center bg-black/20 text-yellow-400">{{ number_format($gNewRev + $gUsedRev, 2) }}</td>
+                                <td class="px-2 py-4 text-center bg-black/20">{{ number_format($gNewOrd + $gUsedOrd) }}</td>
                             </tr>
                         </tfoot>
+                        @endif
                     </table>
                 </div>
-
             </div>
-
         </main>
-
     </div>
+
+    
 
     <style>
         @media print {
-            body * {
-                visibility: hidden;
+            body { background: white !important; }
+            .no-print { display: none !important; }
+            #report-content { 
+                position: static; 
+                width: 100%; 
+                margin: 0; 
+                padding: 0; 
+                box-shadow: none; 
             }
-
-            #report-content,
-            #report-content * {
-                visibility: visible;
-            }
-
-            #report-content {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                margin: 0;
-                padding: 0;
-                border: none;
-                box-shadow: none;
-            }
+            table { border: 1px solid #e5e7eb; }
+            th { background-color: #f9fafb !important; color: black !important; }
+            tfoot { background-color: #1f2937 !important; color: white !important; -webkit-print-color-adjust: exact; }
         }
     </style>
-
 </x-filament-panels::page>

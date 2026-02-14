@@ -214,4 +214,15 @@ return [
         ],
     ],
 
+    'reports' => [
+        'sales_by_condition' => [
+            'label' => 'Sales by Condition Report',
+            'model_label' => 'Sales by Condition Report',
+            'navigation' => [
+                'group' => 'Reports',
+                'label' => 'Sales by Condition Report',
+                'plural_label' => 'Sales by Condition Reports',
+            ],
+        ],
+    ],
 ];
