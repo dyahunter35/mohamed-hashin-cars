@@ -56,12 +56,12 @@ class SalesConditionStats extends BaseWidget
         $usedPercentage = $totalRevenue > 0 ? round(($usedRevenue / $totalRevenue) * 100, 1) : 0;
 
         return [
-            Stat::make('مبيعات المنتجات الجديدة', number_format($newRevenue, 2) . ' ج.م')
+            Stat::make('مبيعات المنتجات الجديدة', number_format($newRevenue, 2) . ' ج.س')
                 ->description("{$newPercentage}% من إجمالي المبيعات | {$newUnitsSold} وحدة")
                 ->descriptionIcon('heroicon-m-sparkles')
                 ->color('info'),
 
-            Stat::make('مبيعات المنتجات المستعملة', number_format($usedRevenue, 2) . ' ج.م')
+            Stat::make('مبيعات المنتجات المستعملة', number_format($usedRevenue, 2) . ' ج.س')
                 ->description("{$usedPercentage}% من إجمالي المبيعات | {$usedUnitsSold} وحدة")
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
                 ->color('warning'),
@@ -70,7 +70,7 @@ class SalesConditionStats extends BaseWidget
                 'متوسط سعر البيع',
                 'جديد: ' . number_format($newAvgOrderValue, 2) . ' | مستعمل: ' . number_format($usedAvgOrderValue, 2)
             )
-                ->description('ج.م للوحدة')
+                ->description('ج.س للوحدة')
                 ->descriptionIcon('heroicon-m-calculator')
                 ->color('success'),
         ];

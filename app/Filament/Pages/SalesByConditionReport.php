@@ -71,6 +71,7 @@ class SalesByConditionReport extends Page
                 $product = Product::find($productId);
                 $productSales[$productId] = [
                     'product_name' => $product->name,
+                    'brand_name' => $product->brand?->name,
                     'category' => $product->category?->name,
                     'new' => ['qty' => 0, 'revenue' => 0, 'orders' => 0],
                     'used' => ['qty' => 0, 'revenue' => 0, 'orders' => 0],

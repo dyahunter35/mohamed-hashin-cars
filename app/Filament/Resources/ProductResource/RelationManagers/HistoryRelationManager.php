@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ProductResource\RelationManagers;
 
+use App\Enums\ItemCondition;
 use App\Enums\StockCase;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -51,7 +52,13 @@ class HistoryRelationManager extends RelationManager
                         ->numeric()
                         ->required()
                         ->minValue(1),
-
+                    Forms\Components\ToggleButtons::make('condition')
+                        ->label(__('order.fields.condition.label'))
+                        ->live()
+                        ->options(ItemCondition::class)
+                        ->default(ItemCondition::New)
+                        ->inline()
+                        ->grouped(),
                     Forms\Components\Textarea::make('notes')
                         ->label(__('stock_history.fields.notes.label'))
                         ->columnSpanFull(),
@@ -77,8 +84,8 @@ class HistoryRelationManager extends RelationManager
                         ->badge(),
 
                     Tables\Columns\TextColumn::make('condition')
-                        ->label(__('order.fields.condition.label')),
-
+                        ->label(__('order.fields.condition.label'))
+                        ->badge(),
 
                     Tables\Columns\TextColumn::make('quantity_change')
                         ->label(__('stock_history.fields.quantity_change.label')),
@@ -107,11 +114,13 @@ class HistoryRelationManager extends RelationManager
                             $branch = Filament::getTenant(); // افتراض أنك تعمل داخل tenant
                             $user = Auth::user();
 
+
                             if ($data['type'] === 'increase' || $data['type'] === 'initial') {
                                 return $inventoryService->addStockForBranch(
                                     $product,
                                     $branch,
                                     $data['quantity_change'],
+                                    $data['condition'],
                                     $data['notes'],
                                     $user
                                 );
@@ -122,6 +131,7 @@ class HistoryRelationManager extends RelationManager
                                         $product,
                                         $branch,
                                         $data['quantity_change'],
+                                        $data['condition'],
                                         $data['notes'],
                                         $user
                                     );

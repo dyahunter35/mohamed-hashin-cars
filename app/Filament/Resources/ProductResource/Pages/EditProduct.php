@@ -47,6 +47,7 @@ class EditProduct extends EditRecord
                             ->numeric()
                             ->required()
                             ->minValue(1),
+
                         Textarea::make('notes')
                             ->label('السبب / ملاحظات')
                             ->placeholder('مثلاً: تلف الكرتونة الأصلية')

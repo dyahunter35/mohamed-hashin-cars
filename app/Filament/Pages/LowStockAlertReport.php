@@ -36,12 +36,6 @@ class LowStockAlertReport extends Page
         return __('branch_reports.navigation.group');
     }
 
-    protected function getHeaderWidgets(): array
-    {
-        return [
-            LowStockAlerts::class,
-        ];
-    }
 
     protected function getHeaderActions(): array
     {

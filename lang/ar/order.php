@@ -61,7 +61,7 @@ return [
             ],
         ],
         'status' => [
-            'label' => 'الحالة',
+            'label' => 'حاله الطلب',
             'placeholder' => 'اختر حالة الطلب',
             'options' => [
                 'all' => 'الكل',
@@ -74,7 +74,7 @@ return [
             ]
         ],
         'condition' => [
-            'label' => 'الحالة',
+            'label' => 'حاله المنتج',
             'placeholder' => 'اختر الحالة',
             'options' => [
                 'new' => 'جديد',

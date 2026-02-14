@@ -505,12 +505,10 @@ class OrderResource extends Resource
                             return $query->get()
                                 ->mapWithKeys(fn(Product $product) => [
                                     $product->id => sprintf(
-                                        '%s - %s (%s) [جديد: %s, مستعمل: %s]',
+                                        '%s - %s (%s)',
                                         $product->name,
                                         $product->category?->name,
-                                        number_format($product->price, 2),
-                                        $product->new_stock_for_current_branch,
-                                        $product->used_stock_for_current_branch
+                                        $product->brand?->name,
                                     )
                                 ]);
                         })

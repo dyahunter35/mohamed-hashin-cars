@@ -6,21 +6,9 @@
         <main class="w-full max-w-7xl mx-auto p-4 sm:p-6 md:p-8 m-4" id="report-content">
 
             <!-- Report Card -->
-            <div class="bg-white shadow-lg rounded-xl overflow-hidden">
+            <x-report-header :label="'تقرير المبيعات حسب حالة المنتجات'" />
 
-                <!-- Header Section -->
-                <header class="border-b border-gray-200 p-6">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center">
-                        <div>
-                            <h1 class="text-2xl font-bold text-gray-900">تقرير المبيعات حسب حالة المنتجات</h1>
-                            <p class="text-sm text-gray-500 mt-1">تحليل شامل للمبيعات والإيرادات حسب حالة المنتج</p>
-                        </div>
-                        <div class="text-sm text-gray-600 mt-4 sm:mt-0 text-left sm:text-right">
-                            <p class="font-semibold">تاريخ التقرير:</p>
-                            <p>{{ now()->format('Y-m-d') }}</p>
-                        </div>
-                    </div>
-                </header>
+            <div class="bg-white shadow-lg rounded-xl overflow-hidden">
 
                 <!-- Table Container -->
                 <div class="overflow-x-auto">
@@ -68,7 +56,8 @@
                                 <tr
                                     class="bg-white border-b border-gray-200 hover:bg-gray-50 transition-colors duration-200">
                                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                        {{ $sale['product_name'] }}
+                                        {{ $sale['product_name'] }} -
+                                        {{ $sale['brand_name'] }}
                                     </td>
                                     <td class="px-6 py-4 text-gray-600">
                                         {{ $sale['category'] ?? '-' }}
