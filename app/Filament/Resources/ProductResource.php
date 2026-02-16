@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers\HistoryRelationManager;
+use App\Models\Branch;
 use App\Models\Product;
 use App\Models\Scopes\IsVisibleScope;
 use Filament\Forms;
@@ -211,6 +212,7 @@ class ProductResource extends Resource
     // --- TABLE ---
     public static function table(Table $table): Table
     {
+        $has_multiple_branches = Branch::count() > 1;
         return $table
             ->query(
                 fn() => parent::getEloquentQuery()
@@ -259,25 +261,26 @@ class ProductResource extends Resource
 
                     Tables\Columns\TextColumn::make('stock_for_current_branch')
                         ->label(__('product.columns.quantity.label'))
-                        ->searchable()
                         ->sortable()
+                        ->visible($has_multiple_branches)
                         ->toggleable(),
 
                     Tables\Columns\TextColumn::make('new_stock_for_current_branch')
                         ->label('جديد (الفرع الحالي)')
                         ->badge()
+                        ->visible($has_multiple_branches)
                         ->color('info')
                         ->toggleable(),
 
                     Tables\Columns\TextColumn::make('used_stock_for_current_branch')
                         ->label('مستعمل (الفرع الحالي)')
                         ->badge()
+                        ->visible($has_multiple_branches)
                         ->color('warning')
                         ->toggleable(),
 
                     Tables\Columns\TextColumn::make('total_stock')
                         ->label(__('product.columns.all_branches_quantity.label'))
-                        ->searchable()
                         ->sortable()
                         ->color(fn($record) => $record->total_stock > $record->security_stock ? 'success' : 'danger')
                         ->visible(fn() => auth()->user()->hasRole('admin'))
