@@ -236,6 +236,12 @@ class ProductResource extends Resource
                         ->sortable()
                         ->toggleable(),
 
+                    Tables\Columns\TextColumn::make('brand.name')
+                        ->label(__('product.fields.brand.label'))
+                        ->searchable()
+                        ->sortable()
+                        ->toggleable(),
+
                     Tables\Columns\IconColumn::make('is_visible')
                         ->label(__('product.columns.visibility.label'))
                         ->sortable()
@@ -304,7 +310,7 @@ class ProductResource extends Resource
                         ->label(__('product.columns.branch.label'))
                         ->searchable()
                         ->badge()
-                        ->visible(fn() => auth()->user()->hasRole('admin'))
+                        ->visible(fn() => auth()->user()->hasRole('admin') && $has_multiple_branches)
                         ->sortable(),
 
                     Tables\Columns\TextColumn::make('published_at')
