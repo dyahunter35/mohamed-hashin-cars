@@ -60,68 +60,65 @@ class EditOrder extends EditRecord
         $newItemsData = $data['items'] ?? [];
 
         return DB::transaction(function () use ($record, $data, $newItemsData, $inventoryService, $currentBranch, $currentUser) {
+            $oldStatus = $record->status;
+            $newStatus = $data['status'] instanceof OrderStatus ? $data['status'] : (OrderStatus::tryFrom($data['status']) ?? OrderStatus::New);
 
-            // Get the original items before any changes
-            $originalItems = $record->items()->get();
-
-            // --- 1. Restock original items ---
-            foreach ($originalItems as $item) {
-                $product = Product::find($item->product_id);
-                $inventoryService->addStockForBranch(
-                    $product,
-                    $currentBranch,
-                    $item->qty,
-                    $item->condition,
-                    "Order Update #{$record->number}",
-                    $currentUser
-                );
+            // 1. Restock original items IF they were previously deducted (i.e., not Proforma)
+            if ($oldStatus !== OrderStatus::Proforma) {
+                foreach ($record->items as $item) {
+                    $product = Product::find($item->product_id);
+                    $inventoryService->addStockForBranch(
+                        $product,
+                        $currentBranch,
+                        $item->qty,
+                        $item->condition,
+                        "Order Update #{$record->number}",
+                        $currentUser
+                    );
+                }
             }
 
-            if (($record->total != $data['total'])) {
+            if (($record->total != $data['total']) && $newStatus !== OrderStatus::Proforma) {
                 $data['status'] = OrderStatus::Processing;
             }
 
-            // --- 2. Update the main order and its related items ---
-            // Filament's default update process will handle creating, updating,
-            // and deleting the related 'items' records automatically.
+            // 2. Update the main order and its related items
             $record->update($data);
-
-            // --- 3. Deduct stock for the new set of items ---
-            // We need to refresh the record to get the newly saved items
             $record->refresh();
-            $newItemsFromDB = $record->items;
 
-            if ($newItemsFromDB->isEmpty()) {
-                Notification::make()->title(__('order.actions.create.notifications.at_least_one'))->warning()->send();
-                //throw new Halt();
-            }
-
-            foreach ($newItemsFromDB as $newItem) {
-                $product = Product::find($newItem->product_id);
-                if (!$inventoryService->isAvailableInBranch($product, $currentBranch, $newItem->qty, $newItem->condition instanceof \App\Enums\ItemCondition ? $newItem->condition : (\App\Enums\ItemCondition::tryFrom($newItem->condition) ?? \App\Enums\ItemCondition::New))) {
-                    Notification::make()
-                        ->title(__('order.actions.create.notifications.stock.title'))
-                        ->body(__('order.actions.create.notifications.stock.message', ['product' => $product->name]))
-                        ->danger()
-                        ->send();
-                    throw new Halt();
+            // 3. Deduct stock for the new set of items IF the NEW status is NOT Proforma
+            if ($newStatus !== OrderStatus::Proforma) {
+                if ($record->items->isEmpty()) {
+                    Notification::make()->title(__('order.actions.create.notifications.at_least_one'))->warning()->send();
                 }
 
-                $inventoryService->deductStockForBranch(
-                    $product,
-                    $currentBranch,
-                    $newItem->qty,
-                    $newItem->condition instanceof \App\Enums\ItemCondition ? $newItem->condition : (\App\Enums\ItemCondition::tryFrom($newItem->condition) ?? \App\Enums\ItemCondition::New),
-                    "Order Update #{$record->number}",
-                    $currentUser
-                );
+                foreach ($record->items as $newItem) {
+                    $product = Product::find($newItem->product_id);
+                    if (!$inventoryService->isAvailableInBranch($product, $currentBranch, $newItem->qty, $newItem->condition instanceof \App\Enums\ItemCondition ? $newItem->condition : (\App\Enums\ItemCondition::tryFrom($newItem->condition) ?? \App\Enums\ItemCondition::New))) {
+                        Notification::make()
+                            ->title(__('order.actions.create.notifications.stock.title'))
+                            ->body(__('order.actions.create.notifications.stock.message', ['product' => $product->name]))
+                            ->danger()
+                            ->send();
+                        throw new Halt();
+                    }
+
+                    $inventoryService->deductStockForBranch(
+                        $product,
+                        $currentBranch,
+                        $newItem->qty,
+                        $newItem->condition instanceof \App\Enums\ItemCondition ? $newItem->condition : (\App\Enums\ItemCondition::tryFrom($newItem->condition) ?? \App\Enums\ItemCondition::New),
+                        "Order Update #{$record->number}",
+                        $currentUser
+                    );
+                }
             }
 
             $inventoryService->updateAllBranches();
 
-            // --- 4. Add an update log ---
+            // 4. Add an update log
             $record->orderLogs()->create([
-                'log' => "Invoice updated By: " . $currentUser->name,
+                'log' => "Invoice updated By: " . $currentUser->name . ($newStatus === OrderStatus::Proforma ? " (Proforma)" : ""),
                 'type' => 'updated'
             ]);
 

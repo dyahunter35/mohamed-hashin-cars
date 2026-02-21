@@ -32,6 +32,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+use Filament\Support\Exceptions\Halt;
 use Livewire\Attributes\On;
 
 class OrderResource extends Resource
@@ -283,6 +285,58 @@ class OrderResource extends Resource
                                 ->success()
                                 ->send();
                         }),
+
+                    Tables\Actions\Action::make('convertToProcessing')
+                        ->label('تحويل إلى معالجة')
+                        ->icon('heroicon-o-arrow-path')
+                        ->color('success')
+                        ->visible(fn($record) => $record->status === OrderStatus::Proforma)
+                        ->requiresConfirmation()
+                        ->modalHeading('تحويل الفاتورة المبدئية')
+                        ->modalDescription('هل أنت متأكد من تحويل هذه الفاتورة المبدئية إلى فاتورة عادية؟ سيتم خصم الكميات من المخزن الآن.')
+                        ->action(function (Order $record) {
+                            $inventoryService = new \App\Services\InventoryService();
+                            $currentBranch = Filament::getTenant();
+                            $currentUser = auth()->user();
+
+                            DB::transaction(function () use ($record, $inventoryService, $currentBranch, $currentUser) {
+                                foreach ($record->items as $item) {
+                                    $product = Product::find($item->product_id);
+
+                                    if (!$inventoryService->isAvailableInBranch($product, $currentBranch, $item->qty, $item->condition instanceof \App\Enums\ItemCondition ? $item->condition : \App\Enums\ItemCondition::from($item->condition))) {
+                                        Notification::make()
+                                            ->title(__('order.actions.create.notifications.stock.title'))
+                                            ->body(__('order.actions.create.notifications.stock.message', ['product' => $product->name]))
+                                            ->danger()
+                                            ->send();
+
+                                        throw new Halt();
+                                    }
+
+                                    $inventoryService->deductStockForBranch(
+                                        $product,
+                                        $currentBranch,
+                                        $item->qty,
+                                        $item->condition,
+                                        "Proforma Conversion #{$record->number}",
+                                        $currentUser
+                                    );
+                                }
+
+                                $record->update(['status' => OrderStatus::Processing]);
+                                $inventoryService->updateAllBranches();
+
+                                $record->orderLogs()->create([
+                                    'log' => "Converted from Proforma to Processing By: " . $currentUser->name,
+                                    'type' => 'status_updated'
+                                ]);
+                            });
+
+                            Notification::make()
+                                ->title('تم التحويل بنجاح')
+                                ->success()
+                                ->send();
+                        }),
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make()
                         ->visible(fn($record) => !$record->deleted_at),
@@ -505,9 +559,9 @@ class OrderResource extends Resource
                             return $query->get()
                                 ->mapWithKeys(fn(Product $product) => [
                                     $product->id => sprintf(
-                                        '%s - %s (%s)',
+                                        '%s (%s)',
                                         $product->name,
-                                        $product->category?->name,
+                                        // $product->category?->name,
                                         $product->brand?->name,
                                     )
                                 ]);
@@ -549,7 +603,7 @@ class OrderResource extends Resource
                                                 $condition = $get('condition');
                                                 $orderStatus = $get('../../status');
 
-                                                if (!$productId || !$value || $orderStatus === OrderStatus::Cancelled->value) {
+                                                if (!$productId || !$value || $orderStatus === OrderStatus::Cancelled->value || $orderStatus === OrderStatus::Proforma->value) {
                                                     return;
                                                 }
 

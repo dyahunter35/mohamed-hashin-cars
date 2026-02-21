@@ -81,6 +81,7 @@ return [
                 'delivered' => 'Delivered',
                 'installed' => 'Installed',
                 'cancelled' => 'Cancelled',
+                'proforma' => 'Proforma Invoice',
             ]
         ],
         'currency' => [

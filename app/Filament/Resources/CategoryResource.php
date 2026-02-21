@@ -23,6 +23,8 @@ class CategoryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-tag';
 
+    protected static bool $shouldRegisterNavigation = false;
+
     protected static ?int $navigationSort = 2;
 
     public static function getModelLabel(): string
@@ -51,57 +53,57 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make()
-                    ->schema([
-                        Forms\Components\Grid::make()
-                            ->schema([
-                                Forms\Components\TextInput::make('name')
-                                    ->label(__('category.fields.name.label'))
-                                    ->placeholder(__('category.fields.name.placeholder'))
-                                    ->required()
-                                    ->maxLength(255)
-                                    ->live(onBlur: true)
-                                    ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
+                    Forms\Components\Section::make()
+                        ->schema([
+                                Forms\Components\Grid::make()
+                                    ->schema([
+                                            Forms\Components\TextInput::make('name')
+                                                ->label(__('category.fields.name.label'))
+                                                ->placeholder(__('category.fields.name.placeholder'))
+                                                ->required()
+                                                ->maxLength(255)
+                                                ->live(onBlur: true)
+                                                ->afterStateUpdated(fn(string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
 
-                                Forms\Components\TextInput::make('slug')
-                                    ->label(__('category.fields.slug.label'))
-                                    ->placeholder(__('category.fields.slug.placeholder'))
-                                    ->disabled()
-                                    ->dehydrated()
-                                    ->required()
-                                    ->maxLength(255)
-                                    ->unique(Category::class, 'slug', ignoreRecord: true),
-                            ]),
+                                            Forms\Components\TextInput::make('slug')
+                                                ->label(__('category.fields.slug.label'))
+                                                ->placeholder(__('category.fields.slug.placeholder'))
+                                                ->disabled()
+                                                ->dehydrated()
+                                                ->required()
+                                                ->maxLength(255)
+                                                ->unique(Category::class, 'slug', ignoreRecord: true),
+                                        ]),
 
-                        Forms\Components\Select::make('parent_id')
-                            ->label(__('category.fields.parent_id.label'))
-                            ->placeholder(__('category.fields.parent_id.placeholder'))
-                            ->relationship('parent', 'name', fn (Builder $query) => $query->where('parent_id', null))
-                            ->searchable()
-                            ->preload(),
+                                Forms\Components\Select::make('parent_id')
+                                    ->label(__('category.fields.parent_id.label'))
+                                    ->placeholder(__('category.fields.parent_id.placeholder'))
+                                    ->relationship('parent', 'name', fn(Builder $query) => $query->where('parent_id', null))
+                                    ->searchable()
+                                    ->preload(),
 
-                        Forms\Components\Toggle::make('is_visible')
-                            ->label(__('category.fields.is_visible.label'))
-                            ->default(true),
+                                Forms\Components\Toggle::make('is_visible')
+                                    ->label(__('category.fields.is_visible.label'))
+                                    ->default(true),
 
-                        Forms\Components\MarkdownEditor::make('description')
-                            ->label(__('category.fields.description.label'))
-                            ->placeholder(__('category.fields.description.placeholder')),
-                    ])
-                    ->columnSpan(['lg' => fn (?Category $record) => $record === null ? 3 : 2]),
-                Forms\Components\Section::make()
-                    ->schema([
-                        Forms\Components\Placeholder::make('created_at')
-                            ->label(__('category.fields.created_at.label'))
-                            ->content(fn (Category $record): ?string => $record->created_at?->diffForHumans()),
+                                Forms\Components\MarkdownEditor::make('description')
+                                    ->label(__('category.fields.description.label'))
+                                    ->placeholder(__('category.fields.description.placeholder')),
+                            ])
+                        ->columnSpan(['lg' => fn(?Category $record) => $record === null ? 3 : 2]),
+                    Forms\Components\Section::make()
+                        ->schema([
+                                Forms\Components\Placeholder::make('created_at')
+                                    ->label(__('category.fields.created_at.label'))
+                                    ->content(fn(Category $record): ?string => $record->created_at?->diffForHumans()),
 
-                        Forms\Components\Placeholder::make('updated_at')
-                            ->label(__('category.fields.updated_at.label'))
-                            ->content(fn (Category $record): ?string => $record->updated_at?->diffForHumans()),
-                    ])
-                    ->columnSpan(['lg' => 1])
-                    ->hidden(fn (?Category $record) => $record === null),
-            ])
+                                Forms\Components\Placeholder::make('updated_at')
+                                    ->label(__('category.fields.updated_at.label'))
+                                    ->content(fn(Category $record): ?string => $record->updated_at?->diffForHumans()),
+                            ])
+                        ->columnSpan(['lg' => 1])
+                        ->hidden(fn(?Category $record) => $record === null),
+                ])
             ->columns(3);
     }
 
@@ -109,39 +111,39 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->label(__('category.fields.name.label'))
-                    ->searchable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('parent.name')
-                    ->label(__('category.fields.parent_id.label'))
-                    ->searchable()
-                    ->sortable(),
-                Tables\Columns\IconColumn::make('is_visible')
-                    ->label(__('category.fields.is_visible.label'))
-                    ->boolean()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->label(__('category.fields.updated_at.label'))
-                    ->toggleable(isToggledHiddenByDefault: true)
-                    ->date()
-                    ->sortable(),
-            ])
+                    Tables\Columns\TextColumn::make('name')
+                        ->label(__('category.fields.name.label'))
+                        ->searchable()
+                        ->sortable(),
+                    Tables\Columns\TextColumn::make('parent.name')
+                        ->label(__('category.fields.parent_id.label'))
+                        ->searchable()
+                        ->sortable(),
+                    Tables\Columns\IconColumn::make('is_visible')
+                        ->label(__('category.fields.is_visible.label'))
+                        ->boolean()
+                        ->sortable(),
+                    Tables\Columns\TextColumn::make('updated_at')
+                        ->label(__('category.fields.updated_at.label'))
+                        ->toggleable(isToggledHiddenByDefault: true)
+                        ->date()
+                        ->sortable(),
+                ])
             ->filters([
-                //
-            ])
+                    //
+                ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
+                    Tables\Actions\EditAction::make(),
+                ])
             ->groupedBulkActions([
-                Tables\Actions\DeleteBulkAction::make()
-                    ->action(function () {
-                        Notification::make()
-                            ->title('Now, now, don\'t be cheeky, leave some records for others to play with!')
-                            ->warning()
-                            ->send();
-                    }),
-            ]);
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->action(function () {
+                            Notification::make()
+                                ->title('Now, now, don\'t be cheeky, leave some records for others to play with!')
+                                ->warning()
+                                ->send();
+                        }),
+                ]);
     }
 
     public static function getRelations(): array

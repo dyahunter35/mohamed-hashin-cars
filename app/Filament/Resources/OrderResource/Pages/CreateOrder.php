@@ -35,6 +35,15 @@ class CreateOrder extends CreateRecord
                 throw new \Exception('Cannot create an order with no items.');
             }
 
+            // Skip stock deduction if the order is a Proforma invoice
+            if ($order->status === \App\Enums\OrderStatus::Proforma) {
+                $order->orderLogs()->create([
+                    'log' => "Proforma Invoice created By: " . $currentUser->name,
+                    'type' => 'created'
+                ]);
+                return;
+            }
+
             foreach ($order->items as $item) {
                 $product = Product::find($item->product_id);
 

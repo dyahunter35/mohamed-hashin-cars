@@ -112,12 +112,12 @@ class ProductResource extends Resource
                                                 ->preload()
                                                 ->searchable(),
 
-                                            Forms\Components\Select::make('category_id')
+                                            /* Forms\Components\Select::make('category_id')
                                                 ->label(__('product.fields.category.label'))
                                                 ->placeholder(__('product.fields.category.placeholder'))
                                                 ->relationship('category', 'name')
                                                 ->preload()
-                                                ->required(),
+                                                ->required(), */
                                         ])
                                     ->columns(2),
 
@@ -230,11 +230,11 @@ class ProductResource extends Resource
                         ->searchable()
                         ->sortable(),
 
-                    Tables\Columns\TextColumn::make('category.name')
+                    /* Tables\Columns\TextColumn::make('category.name')
                         ->label(__('product.columns.category.label'))
                         ->searchable()
                         ->sortable()
-                        ->toggleable(),
+                        ->toggleable(), */
 
                     Tables\Columns\TextColumn::make('brand.name')
                         ->label(__('product.fields.brand.label'))

@@ -2,6 +2,12 @@
     <x-filament-panels::page>
         <x-filament::section class="overflow-hidden border-none shadow-none bg-white dark:bg-gray-900 print:bg-transparent print:p-0">
             {{-- Header Section --}}
+
+            @if($this->getRecord()->status->value === 'proforma')
+        <div class="watermark">
+            فاتورة مبدئية
+        </div>
+    @endif
             <div
                 class="flex  md:flex-row justify-between items-start gap-8 border-b border-gray-100 dark:border-gray-800 pb-8">
                 <div class="flex items-center gap-5">
@@ -100,9 +106,9 @@
                                                     <td class="px-6 py-5">
                                                         <p class="font-bold text-gray-950 dark:text-white">
                                                             {{  sprintf(
-                                '%s - %s (%s)',
+                                '%s (%s)',
                                 $item->product?->name,
-                                $item->product?->category?->name,
+                                // $item->product?->category?->name,
                                 $item->product?->brand?->name,
                             )
                                                              }}
@@ -143,7 +149,7 @@
                         <span class="text-gray-500">{{ trans('order.invoice.labels.subtotal') }}</span>
                         <span
                             class="font-semibold">{{ number_format($this->getRecord()->total + $this->getRecord()->discount - $this->getRecord()->shipping - $this->getRecord()->install, 1) }}
-                            {{ $this->getRecord()->currency }}</span>
+                            ج.س</span>
                     </div>
 
                     @if ($this->getRecord()->shipping > 0)
@@ -165,7 +171,7 @@
                             class="text-lg font-bold">{{ trans('filament-invoices::messages.invoices.view.total') }}</span>
                         <span class="text-2xl font-black text-primary-600 dark:text-primary-400">
                             {{ number_format($this->getRecord()->total, 1) }} <small
-                                class="text-xs">{{ $this->getRecord()->currency }}</small>
+                                class="text-xs">ج.س</small>
                         </span>
                     </div>
 
@@ -180,7 +186,7 @@
                     @if ($this->getRecord()->total - $this->getRecord()->paid > 0)
                         <div class="flex justify-between text-lg font-bold text-red-600 pt-2">
                             <span>{{ trans('filament-invoices::messages.invoices.view.balance_due') }}</span>
-                            <span>{{ number_format($this->getRecord()->total - $this->getRecord()->paid, 1) }}</span>
+                            <span>{{ number_format($this->getRecord()->total - $this->getRecord()->paid, 1) }} ج.س</span>
                         </div>
                     @endif
                 </div>
@@ -210,7 +216,7 @@
                             @foreach ($this->getRecord()->orderMetas()->latest()->get() as $meta)
                                 <tr>
                                     <td class="px-6 py-4 text-sm">{{ $meta->created_at->toFormattedDateString() }}</td>
-                                    <td class="px-6 py-4 text-sm font-bold">{{ number_format($meta->value, 1) }} SDG</td>
+                                    <td class="px-6 py-4 text-sm font-bold">{{ number_format($meta->value, 1) }} ج.س</td>
                                     <td class="px-6 py-4">
                                         <x-filament::badge size="sm" color="gray">
                                             {{ \App\Enums\Payment::tryFrom($meta->group)?->getLabel() ?? $meta->group }}
@@ -227,6 +233,23 @@
 
     {{-- Print Optimized Styles --}}
     <style>
+        /* تنسيق العلامة المائية في المتصفح */
+    .watermark {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        display: none;
+        transform: translate(-50%, -50%) rotate(-45deg);
+        font-size: 2rem;
+        font-weight: 900;
+        color: rgba(0, 0, 0, 0.05); /* لون خفيف جداً في المتصفح */
+        white-space: nowrap;
+        pointer-events: none; /* لكي لا تمنع الضغط على العناصر تحتها */
+        z-index: 0;
+        user-select: none;
+        text-transform: uppercase;
+    }
+
         @media print {
             * {
                 background: transparent !important;
@@ -234,7 +257,8 @@
                 color: black !important;
             }
             img{
-                /* filter: brightness(0) !important; */
+                filter: brightness(0) !important;
+                margin: 10px !important;
             }
 
             .fi-main-ctn {
@@ -272,6 +296,15 @@
                 background-color: #f9fafb !important;
                 -webkit-print-color-adjust: exact;
             }
+
+            .watermark {
+                display: block;
+            /* في الطباعة نزيد الوضوح قليلاً لتظهر في البرينتر */
+            color: rgba(0, 0, 0, 0.08) !important;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            font-size: 10rem; /* حجم أكبر في الطباعة */
+        }
         }
     </style>
 </div>
