@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use App\Enums\OrderStatus;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Branch;
@@ -101,6 +102,7 @@ class SalesAndPaymentsReport extends Page implements HasForms
 
         $query = Order::query()
             ->with(['branch'])
+            ->where('status', '!=', OrderStatus::Proforma)
             ->select('orders.*');
 
         if ($from && $to) {

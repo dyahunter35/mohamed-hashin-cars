@@ -221,6 +221,10 @@ return [
                 'label' => 'Average Total',
                 'icon' => 'heroicon-o-currency-dollar',
             ],
+            'proforma_orders' => [
+                'label' => 'Proforma Orders',
+                'icon' => 'heroicon-o-document',
+            ],
         ],
     ],
     'invoice' => [

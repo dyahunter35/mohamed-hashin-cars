@@ -10,13 +10,14 @@ use Filament\Widgets\TableWidget as BaseWidget;
 
 class LatestOrders extends BaseWidget
 {
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
     protected static ?string $heading = 'أحدث الطلبات';
 
     public function table(Table $table): Table
     {
         return $table
-            ->query(OrderResource::getEloquentQuery()->latest()->limit(10)) // جلب آخر 10 طلبات
+            ->query(OrderResource::getEloquentQuery()->where('status', '!=', OrderStatus::Proforma)->latest()->limit(5)) // جلب آخر 10 طلبات
+
             ->columns([
                 Tables\Columns\TextColumn::make('number')
                     ->label('رقم الطلب'),
@@ -32,10 +33,11 @@ class LatestOrders extends BaseWidget
                     ->label('تاريخ الطلب')
                     ->dateTime(),
             ])
+            ->paginated(false)
             ->actions([
-                Tables\Actions\Action::make('view')
-                    ->label('عرض')
-                    ->url(fn($record): string => OrderResource::getUrl('view', ['record' => $record])),
-            ]);
+                    Tables\Actions\Action::make('view')
+                        ->label('عرض')
+                        ->url(fn($record): string => OrderResource::getUrl('view', ['record' => $record])),
+                ]);
     }
 }

@@ -4,12 +4,15 @@ namespace App\Services;
 
 use App\Enums\ItemCondition;
 use App\Models\Branch;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\Scopes\IsVisibleScope;
 use App\Models\StockHistory;
 use App\Models\User;
 use Exception;
 use Filament\Facades\Filament;
+use Filament\Notifications\Notification;
+use Filament\Support\Exceptions\Halt;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -32,30 +35,28 @@ class InventoryService
      * @param User|null $causer المستخدم الذي قام بالعملية.
      * @return StockHistory السجل التاريخي الذي تم إنشاؤه.
      */
-    public function addStockForBranch(Product $product, Branch $branch, int $quantity, ItemCondition $condition = ItemCondition::New , ?string $notes = 'Manual Update', ?User $causer = null): StockHistory
+
+    public function addStockForBranch(Product $product, Branch $branch, int|float $quantity, ItemCondition $condition = ItemCondition::New , ?string $notes = 'Manual Update', ?User $causer = null, ?int $orderId = null): StockHistory
     {
-        if ($quantity <= 0) {
+        if ($quantity <= 0)
             throw new Exception('الكمية يجب أن تكون أكبر من صفر.');
-        }
 
-        // استخدام transaction لضمان تنفيذ العملية بالكامل.
-        return DB::transaction(function () use ($product, $branch, $quantity, $condition, $notes, $causer) {
+        return DB::transaction(function () use ($product, $branch, $quantity, $condition, $notes, $causer, $orderId) {
+            $pivot = DB::table('branch_product')
+                ->where('product_id', $product->id)
+                ->where('branch_id', $branch->id)
+                ->first();
 
-            // جلب الكمية الحالية من الجدول الوسيط.
-            $pivot = $product->branches()->find($branch->id)?->pivot;
             $currentQty = $pivot->total_quantity ?? 0;
-            $newQty = $currentQty + $quantity;
 
-            // إنشاء سجل في جدول تاريخ المخزون.
-            // هذا السجل سيقوم تلقائياً بتحديث `total_quantity` في الجدول الوسيط
-            // عبر الـ event listener الموجود في موديل StockHistory.
             return StockHistory::create([
                 'product_id' => $product->id,
                 'branch_id' => $branch->id,
+                'order_id' => $orderId,
                 'type' => 'increase',
                 'quantity_change' => $quantity,
                 'condition' => $condition,
-                'new_quantity' => $newQty,
+                'new_quantity' => $currentQty + $quantity,
                 'notes' => $notes,
                 'user_id' => $causer?->id,
             ]);
@@ -63,53 +64,89 @@ class InventoryService
     }
 
     /**
-     * خصم كمية من مخزون منتج في فرع معين بطريقة آمنة.
-     *
-     * @param Product $product المنتج الذي سيتم خصم المخزون منه.
-     * @param Branch $branch الفرع الذي سيتم تحديث المخزون فيه.
-     * @param int $quantity الكمية المراد خصمها.
-     * @param ItemCondition $condition حالة المنتج (جديد أو مستعمل).
-     * @param string|null $notes ملاحظات حول العملية (مثال: "Order #123").
-     * @param User|null $causer المستخدم الذي قام بالعملية.
-     * @return StockHistory السجل التاريخي الذي تم إنشاؤه.
-     * @throws Exception إذا كانت الكمية المطلوبة غير متوفرة.
+     * خصم مخزون مع ربطه بـ order_id
      */
-    public function deductStockForBranch(Product $product, Branch $branch, int $quantity, ItemCondition $condition = ItemCondition::New , ?string $notes = 'Sale', ?User $causer = null): StockHistory
+    public function deductStockForBranch(Product $product, Branch $branch, int|float $quantity, ItemCondition $condition = ItemCondition::New , ?string $notes = 'Sale', ?User $causer = null, ?int $orderId = null): StockHistory
     {
         if ($quantity <= 0) {
-            throw new Exception('الكمية يجب أن تكون أكبر من صفر.');
+            Notification::make()->title('الكمية يجب أن تكون أكبر من صفر.')->warning()->send();
+            throw new Halt();
         }
 
-        return DB::transaction(function () use ($product, $branch, $quantity, $condition, $notes, $causer) {
-
-            // قفل الصف في الجدول الوسيط لمنع الـ Race Conditions.
+        return DB::transaction(function () use ($product, $branch, $quantity, $condition, $notes, $causer, $orderId) {
             $pivotRow = DB::table('branch_product')
                 ->where('product_id', $product->id)
                 ->where('branch_id', $branch->id)
                 ->lockForUpdate()
                 ->first();
 
-            $currentQty = $pivotRow->total_quantity ?? 0;
-            $conditionQty = $condition === ItemCondition::New ? ($pivotRow->new_quantity ?? 0) : ($pivotRow->used_quantity ?? 0);
+            $currentQty = $pivotRow ? $pivotRow->total_quantity : 0;
+            $conditionQty = $pivotRow ? (($condition === ItemCondition::New) ? ($pivotRow->new_quantity ?? 0) : ($pivotRow->used_quantity ?? 0)) : 0;
 
-            // التحقق من التوفر بعد قفل الصف.
             if ($conditionQty < $quantity) {
-                throw new Exception("الكمية المطلوبة للمنتج '{$product->name}' بحالة '{$condition->getLabel()}' غير متوفرة.");
+                Notification::make()
+                    ->title("المخزون غير كافٍ للمنتج '{$product->name}'")
+                    ->danger()
+                    ->send();
+                throw new Halt();
             }
 
-            $newQty = $currentQty - $quantity;
-
-            // إنشاء سجل تاريخي، والذي سيقوم بتحديث `total_quantity` تلقائياً.
             return StockHistory::create([
                 'product_id' => $product->id,
                 'branch_id' => $branch->id,
+                'order_id' => $orderId,
                 'type' => 'decrease',
                 'quantity_change' => $quantity,
                 'condition' => $condition,
-                'new_quantity' => $newQty,
+                'new_quantity' => $currentQty - $quantity,
                 'notes' => $notes,
                 'user_id' => $causer?->id,
             ]);
+        });
+    }
+
+    public function adjustStock(Product $product, Branch $branch, float $quantityChange, ItemCondition $condition = ItemCondition::New , ?string $notes = 'Adjustment', ?User $causer = null, ?int $orderId = null): StockHistory
+    {
+        return DB::transaction(function () use ($product, $branch, $quantityChange, $condition, $notes, $causer, $orderId) {
+
+            // جلب الرصيد الإجمالي الحالي من الـ Pivot
+            $pivot = DB::table('branch_product')
+                ->where('product_id', $product->id)
+                ->where('branch_id', $branch->id)
+                ->first();
+
+            $currentTotal = $pivot->total_quantity ?? 0;
+
+            return StockHistory::create([
+                'product_id' => $product->id,
+                'branch_id' => $branch->id,
+                'order_id' => $orderId,
+                'type' => 'initial', // توحيد النوع كما طلبت
+                'quantity_change' => $quantityChange, // تخزين الإشارة (+ أو -)
+                'condition' => $condition,
+                'new_quantity' => $currentTotal + $quantityChange,
+                'notes' => $notes,
+                'user_id' => $causer?->id,
+            ]);
+        });
+    }
+
+    /**
+     * عكس وحذف جميع الحركات السابقة المرتبطة بطلب معين
+     */
+    public function revertOrderMovements(int $orderId, Branch $branch)
+    {
+        DB::transaction(function () use ($orderId, $branch) {
+            // جلب كل الحركات المرتبطة بهذا الطلب في هذا الفرع
+            $movements = StockHistory::where('order_id', $orderId)
+                ->where('branch_id', $branch->id)
+                ->get();
+
+            foreach ($movements as $movement) {
+                // ملاحظة: الحذف هنا كافٍ لأن دالة updateAllBranches تعيد حساب الإجمالي 
+                // بناءً على السجلات الموجودة فقط في جدول التاريخ.
+                $movement->delete();
+            }
         });
     }
 
@@ -122,13 +159,35 @@ class InventoryService
      * @param ItemCondition $condition حالة المنتج (جديد أو مستعمل).
      * @return bool
      */
-    public function isAvailableInBranch(Product $product, Branch $branch, int $quantity, ItemCondition $condition = ItemCondition::New): bool
+    public function isAvailableInBranch(Product|int $product, Branch|int $branch, int|float $quantity, ItemCondition $condition = ItemCondition::New): bool
     {
-        $pivot = $product->branches()->find($branch->id)?->pivot;
-        $conditionQty = $condition === ItemCondition::New ? ($pivot->new_quantity ?? 0) : ($pivot->used_quantity ?? 0);
+        $productId = $product instanceof Product ? $product->id : $product;
+        $branchId = $branch instanceof Branch ? $branch->id : $branch;
 
-        return $conditionQty >= $quantity;
+        $pivot = DB::table('branch_product')
+            ->where('product_id', $productId)
+            ->where('branch_id', $branchId)
+            ->first();
+
+        if (!$pivot) {
+            // محاولة أولية لإعادة بناء البيانات لو مش موجودة
+            $this->updateStockInBranch($productId, $branchId);
+            $pivot = DB::table('branch_product')
+                ->where('product_id', $productId)
+                ->where('branch_id', $branchId)
+                ->first();
+        }
+
+        if (!$pivot) {
+            return false;
+        }
+
+        $available = ($condition === ItemCondition::New) ? ($pivot->new_quantity ?? 0) : ($pivot->used_quantity ?? 0);
+
+        return (float) $available >= (float) $quantity;
     }
+
+
 
     /**
      * Recalculates and updates the total stock for a specific product in a specific branch.
@@ -137,32 +196,46 @@ class InventoryService
      * @param Branch $branch
      * @return int The number of affected rows (usually 1 if successful, 0 if not found).
      */
-    public function updateStockInBranch(Product $product, Branch $branch): int
+    public function updateStockInBranch(Product|int $product, Branch|int $branch): void
     {
-        // Calculate the correct totals from the history table for each condition
-        $newTotal = StockHistory::where('product_id', $product->id)
-            ->where('branch_id', $branch->id)
-            ->where('condition', 'new')
-            ->sum(DB::raw('CASE WHEN type = "increase" or type = "initial" THEN quantity_change ELSE -quantity_change END'));
+        $productId = $product instanceof Product ? $product->id : $product;
+        $branchId = $branch instanceof Branch ? $branch->id : $branch;
 
-        $usedTotal = StockHistory::where('product_id', $product->id)
-            ->where('branch_id', $branch->id)
+        /**
+         * المنطق الحسابي الموحد:
+         * 1. إذا كان النوع 'decrease' -> نحول القيمة دائماً لسالب.
+         * 2. في الحالات الأخرى (initial, increase) -> نأخذ القيمة كما هي.
+         * هذا يضمن أن 'initial' لو كان سالباً سيُطرح، ولو موجباً سيُجمع.
+         */
+        $sumExpression = 'SUM(CASE WHEN type = "decrease" THEN -ABS(quantity_change) ELSE quantity_change END)';
+
+        // حساب المجاميع بناءً على الحالة (جديد / مستعمل)
+        $newTotal = StockHistory::where('product_id', $productId)
+            ->where('branch_id', $branchId)
+            ->where('condition', 'new')
+            ->selectRaw($sumExpression . ' as total')
+            ->value('total') ?? 0;
+
+        $usedTotal = StockHistory::where('product_id', $productId)
+            ->where('branch_id', $branchId)
             ->where('condition', 'used')
-            ->sum(DB::raw('CASE WHEN type = "increase" or type = "initial" THEN quantity_change ELSE -quantity_change END'));
+            ->selectRaw($sumExpression . ' as total')
+            ->value('total') ?? 0;
 
         $total = $newTotal + $usedTotal;
 
-        // Update the 'branch_product' pivot table
-        return DB::table('branch_product')
-            ->where('product_id', $product->id)
-            ->where('branch_id', $branch->id)
-            ->update([
+        // تحديث جدول الـ Pivot (branch_product)
+        DB::table('branch_product')
+            ->updateOrInsert(
+                ['product_id' => $productId, 'branch_id' => $branchId],
+                [
                     'total_quantity' => $total,
                     'new_quantity' => $newTotal,
                     'used_quantity' => $usedTotal,
-                ]);
+                    'updated_at' => now(),
+                ]
+            );
     }
-
     public function updateAll()
     {
         $products = Product::query()
@@ -175,28 +248,38 @@ class InventoryService
         }
     }
 
-    public function updateAllBranches()
+    public function updateAllBranches(): void
     {
+        // المنطق المشترك لحساب الكمية بناءً على النوع
+        // Initial & Increase -> (+)
+        // Decrease -> (-)
+        $sqlCalculation = 'COALESCE(SUM(
+            CASE 
+                WHEN type = "decrease" THEN -ABS(quantity_change)
+                ELSE quantity_change 
+            END
+        ), 0)';
+
         DB::table('branch_product')->update([
             'total_quantity' => DB::raw(
-                '(COALESCE((SELECT SUM(CASE WHEN type = "increase" or type = "initial" THEN quantity_change ELSE -quantity_change END)
-              FROM stock_histories
-              WHERE stock_histories.product_id = branch_product.product_id
-              AND stock_histories.branch_id = branch_product.branch_id), 0))'
+                "(SELECT $sqlCalculation 
+              FROM stock_histories 
+              WHERE stock_histories.product_id = branch_product.product_id 
+              AND stock_histories.branch_id = branch_product.branch_id)"
             ),
             'new_quantity' => DB::raw(
-                '(COALESCE((SELECT SUM(CASE WHEN type = "increase" or type = "initial" THEN quantity_change ELSE -quantity_change END)
-              FROM stock_histories
-              WHERE stock_histories.product_id = branch_product.product_id
-              AND stock_histories.branch_id = branch_product.branch_id
-              AND stock_histories.condition = "new"), 0))'
+                "(SELECT $sqlCalculation 
+              FROM stock_histories 
+              WHERE stock_histories.product_id = branch_product.product_id 
+              AND stock_histories.branch_id = branch_product.branch_id 
+              AND stock_histories.condition = 'new')"
             ),
             'used_quantity' => DB::raw(
-                '(COALESCE((SELECT SUM(CASE WHEN type = "increase" or type = "initial" THEN quantity_change ELSE -quantity_change END)
-              FROM stock_histories
-              WHERE stock_histories.product_id = branch_product.product_id
-              AND stock_histories.branch_id = branch_product.branch_id
-              AND stock_histories.condition = "used"), 0))'
+                "(SELECT $sqlCalculation 
+              FROM stock_histories 
+              WHERE stock_histories.product_id = branch_product.product_id 
+              AND stock_histories.branch_id = branch_product.branch_id 
+              AND stock_histories.condition = 'used')"
             )
         ]);
     }

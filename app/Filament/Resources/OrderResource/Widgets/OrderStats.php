@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\OrderResource\Widgets;
 
+use App\Enums\OrderStatus;
 use App\Filament\Resources\OrderResource\Pages\ListOrders;
 use App\Models\Order;
 use Filament\Facades\Filament;
@@ -24,7 +25,8 @@ class OrderStats extends BaseWidget
 
     protected function getStats(): array
     {
-        $query = Order::where('branch_id', Filament::getTenant()->id);
+        $query = Order::where('branch_id', Filament::getTenant()->id)->where('status', '!=', OrderStatus::Proforma);
+
         $orderData = Trend::query($query)
             ->between(
                 start: now()->subYear(),
@@ -43,6 +45,12 @@ class OrderStats extends BaseWidget
                 ->color('success')
                 ->label(__('order.widgets.stats.orders.label'))
                 ->icon('heroicon-o-shopping-cart'),
+
+            // Proforma orders
+            Stat::make('Proforma orders', $query
+                ->where('status', 'proforma')->count())
+                ->label(__('order.widgets.stats.proforma_orders.label'))
+                ->icon('heroicon-o-document'),
 
             Stat::make('Open orders', $query
                 ->whereIn('status', ['open', 'processing'])->count())

@@ -3,9 +3,11 @@
 namespace App\Filament\Resources;
 
 use App\Enums\ItemCondition;
+use App\Filament\Actions\Table\ToProcessAction;
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
 use App\Models\Order;
+use App\Models\OrderItem;
 use Filament\Forms;
 use App\Enums\OrderStatus;
 use App\Enums\Payment;
@@ -145,7 +147,6 @@ class OrderResource extends Resource
 
                     Tables\Columns\TextColumn::make('customer.name')
                         ->label(__('order.fields.customer.label'))
-                        ->searchable()
                         ->formatStateUsing(fn($state, $record) => ($record->is_guest) ? $state . '  ' . __('customer.guest_suffix') : $state)
                         ->sortable()
                         ->toggleable(),
@@ -285,73 +286,12 @@ class OrderResource extends Resource
                                 ->success()
                                 ->send();
                         }),
-
-                    Tables\Actions\Action::make('convertToProcessing')
-                        ->label('تحويل إلى معالجة')
-                        ->icon('heroicon-o-arrow-path')
-                        ->color('success')
-                        ->visible(fn($record) => $record->status === OrderStatus::Proforma)
-                        ->requiresConfirmation()
-                        ->modalHeading('تحويل الفاتورة المبدئية')
-                        ->modalDescription('هل أنت متأكد من تحويل هذه الفاتورة المبدئية إلى فاتورة عادية؟ سيتم خصم الكميات من المخزن الآن.')
-                        ->action(function (Order $record) {
-                            $inventoryService = new \App\Services\InventoryService();
-                            $currentBranch = Filament::getTenant();
-                            $currentUser = auth()->user();
-
-                            DB::transaction(function () use ($record, $inventoryService, $currentBranch, $currentUser) {
-                                foreach ($record->items as $item) {
-                                    $product = Product::find($item->product_id);
-
-                                    if (!$inventoryService->isAvailableInBranch($product, $currentBranch, $item->qty, $item->condition instanceof \App\Enums\ItemCondition ? $item->condition : \App\Enums\ItemCondition::from($item->condition))) {
-                                        Notification::make()
-                                            ->title(__('order.actions.create.notifications.stock.title'))
-                                            ->body(__('order.actions.create.notifications.stock.message', ['product' => $product->name]))
-                                            ->danger()
-                                            ->send();
-
-                                        throw new Halt();
-                                    }
-
-                                    $inventoryService->deductStockForBranch(
-                                        $product,
-                                        $currentBranch,
-                                        $item->qty,
-                                        $item->condition,
-                                        "Proforma Conversion #{$record->number}",
-                                        $currentUser
-                                    );
-                                }
-
-                                $record->update(['status' => OrderStatus::Processing]);
-                                $inventoryService->updateAllBranches();
-
-                                $record->orderLogs()->create([
-                                    'log' => "Converted from Proforma to Processing By: " . $currentUser->name,
-                                    'type' => 'status_updated'
-                                ]);
-                            });
-
-                            Notification::make()
-                                ->title('تم التحويل بنجاح')
-                                ->success()
-                                ->send();
-                        }),
+                    \App\Filament\Actions\Tables\ToProcessAction::make(),
                     Tables\Actions\ViewAction::make(),
-                    Tables\Actions\EditAction::make()
-                        ->visible(fn($record) => !$record->deleted_at),
-                    Tables\Actions\DeleteAction::make()
-                        ->visible(fn($record) => !$record->deleted_at),
-                    Tables\Actions\RestoreAction::make()
-                        ->requiresConfirmation()
-                        ->visible(fn($record) => $record->deleted_at && auth()->user()->can('restore_order')),
-                    Tables\Actions\Action::make('forceDeleteItem')
-                        ->label('حذف نهائي')
-                        ->requiresConfirmation()
-                        ->action(fn(Model $record) => $record->forceDelete())
-                        ->color('danger')
-                        ->icon('heroicon-o-trash')
-                        ->visible(fn($record) => $record->deleted_at && auth()->user()->can('force_delete_order')),
+                    Tables\Actions\EditAction::make()->visible(fn($record) => !$record->deleted_at),
+                    Tables\Actions\DeleteAction::make()->visible(fn($record) => !$record->deleted_at),
+                    Tables\Actions\RestoreAction::make()->requiresConfirmation()->visible(fn($record) => $record->deleted_at && auth()->user()->can('restore_order')),
+                    Tables\Actions\Action::make('forceDeleteItem')->label('حذف نهائي')->requiresConfirmation()->action(fn(Model $record) => $record->forceDelete())->color('danger')->icon('heroicon-o-trash')->visible(fn($record) => $record->deleted_at && auth()->user()->can('force_delete_order')),
                 ])
             ->defaultSort('created_at', 'desc')
             ->groupedBulkActions([
@@ -506,12 +446,20 @@ class OrderResource extends Resource
             Forms\Components\DateTimePicker::make('created_at')
                 ->label(__('order.fields.created_at.label'))
                 ->default(now()),
+
             Forms\Components\ToggleButtons::make('status')
                 ->label(__('order.fields.status.label'))
                 ->inline()
+                ->visible(fn($record, $operation) => $operation == 'create' || ($record && $record?->status != OrderStatus::Proforma))
                 ->options(OrderStatus::class)
                 ->default(OrderStatus::New)
                 ->required(),
+
+            Forms\Components\Hidden::make('status')
+                ->visible(fn($record, $operation) => $operation == 'edit' && ($record && $record?->status == OrderStatus::Proforma))
+                ->default(OrderStatus::Proforma)
+                ->required(),
+
             Forms\Components\Select::make('currency')
                 ->label(__('order.fields.currency.label'))
                 ->searchable()
@@ -530,6 +478,7 @@ class OrderResource extends Resource
         return Forms\Components\Repeater::make('items')
             ->relationship()
             ->hiddenLabel()
+            ->minItems(1)
             ->label(__('order.fields.items.label'))
             ->itemLabel(fn(array $state): string => Product::find($state['product_id'])?->name ?? 'Order Item')
             ->schema([
@@ -600,36 +549,51 @@ class OrderResource extends Resource
                                     ->rules([
                                             fn(Get $get): \Closure => function (string $attribute, $value, \Closure $fail) use ($get) {
                                                 $productId = $get('product_id');
-                                                $condition = $get('condition');
+                                                // التأكد من تحويل الحالة إلى Enum إذا كانت نصاً
+                                                $conditionStr = $get('condition') ?? 'new';
+                                                $condition = $conditionStr instanceof ItemCondition
+                                                    ? $conditionStr
+                                                    : ItemCondition::from($conditionStr);
+
                                                 $orderStatus = $get('../../status');
 
-                                                if (!$productId || !$value || $orderStatus === OrderStatus::Cancelled->value || $orderStatus === OrderStatus::Proforma->value) {
+                                                // 1. استثناء الحالات التي لا تتطلب فحص مخزون
+                                                if (!$productId || !$value || $orderStatus === OrderStatus::Cancelled || $orderStatus === OrderStatus::Proforma) {
                                                     return;
                                                 }
 
                                                 $product = Product::find($productId);
-                                                if (!$product) {
+                                                if (!$product)
+                                                    return;
+
+                                                // 2. معالجة حالة التعديل (Edit Mode)
+                                                $requestedQty = (int) $value;
+                                                $itemId = $get('id'); // الـ Repeater يوفر معرف السطر إذا كان موجوداً مسبقاً
+                                                $originalQty = 0;
+
+                                                if ($itemId) {
+                                                    // نجلب الكمية القديمة المسجلة في هذا البند تحديداً
+                                                    $originalQty = OrderItem::where('id', $itemId)->value('qty') ?? 0;
+                                                }
+
+                                                // 3. حساب الكمية "الإضافية" المطلوبة فعلياً من المستودع
+                                                $neededExtra = $requestedQty - $originalQty;
+
+                                                // إذا كان المستخدم يطلب كمية أقل من أو تساوي الموجودة أصلاً في الطلب، لا داعي للفحص
+                                                if ($neededExtra <= 0) {
                                                     return;
                                                 }
 
+                                                // 4. استخدام الـ InventoryService الخاص بك لفحص التوفر
                                                 $inventoryService = new \App\Services\InventoryService();
                                                 $currentBranch = Filament::getTenant();
-                                                $requestedQty = (int) $value;
 
-                                                // If editing, we should account for the quantity already in this order
-                                                $currentOrderQty = 0;
-                                                $record = $get('../../id'); // In Edit mode, we might have the record ID
-                                    
-                                                // A more reliable way in Filament to check if we are in Edit mode
-                                                $livewire = $get('../../');
-                                                // This is a bit tricky in static form() method, 
-                                                // but we can try to find the original record if it exists.
-                                    
+                                                // نفحص فقط الـ $neededExtra (الزيادة المطلوبة)
                                                 $isAvailable = $inventoryService->isAvailableInBranch(
                                                     $product,
                                                     $currentBranch,
-                                                    $requestedQty,
-                                                    $condition instanceof ItemCondition ? $condition : ItemCondition::from($condition ?? 'new')
+                                                    $neededExtra,
+                                                    $condition
                                                 );
 
                                                 if (!$isAvailable) {
@@ -637,7 +601,6 @@ class OrderResource extends Resource
                                                 }
                                             },
                                         ]),
-
                                 DecimalInput::make('sub_discount')
                                     ->label(__('order.fields.items.sub_discount.label'))
                                     ->columnSpan(1),

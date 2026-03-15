@@ -76,9 +76,22 @@
         <h1 class="error-title">ممنوع الوصول</h1>
         <p class="error-message">
             عذراً، ليس لديك الصلاحية اللازمة للوصول إلى هذه الصفحة.
-            إذا كنت تعتقد أن هذا خطأ، يرجى التواصل مع مسؤول النظام.
         </p>
-        <a href="/" class="home-button">العودة إلى الرئيسية</a>
+
+        <div style="display: flex; gap: 10px;">
+            <a href="{{ url('/') }}" class="home-button">العودة إلى الرئيسية</a>
+
+            @if(auth()->check())
+                <form action="{{ route('filament.' . filament()->getCurrentPanel()->getId() . '.auth.logout') }}"
+                    method="post" style="display: inline;">
+                    @csrf
+                    <button type="submit" class="home-button"
+                        style="border: none; cursor: pointer; background-color: #c53030;">
+                        تسجيل الخروج
+                    </button>
+                </form>
+            @endif
+        </div>
     </div>
 </body>
 

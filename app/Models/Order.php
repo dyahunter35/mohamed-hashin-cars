@@ -15,11 +15,34 @@ class Order extends Model
 {
     use SoftDeletes;
 
+    protected static function booted(): void
+    {
+        // عند حذف الطلب (Soft Delete) — إعادة الكميات للمخزون
+        static::deleting(function (Order $order) {
+            // لا نحتاج للإعادة إذا كان الطلب Proforma أو Cancelled (لم يُخصَم منه المخزون)
+            $activeStatuses = [
+                OrderStatus::Proforma,
+                OrderStatus::Cancelled,
+            ];
+
+            if (in_array($order->status, $activeStatuses)) {
+                return;
+            }
+
+            // مسح حركات المخزون المرتبطة بهذا الطلب في كل الفروع
+            \App\Models\StockHistory::where('order_id', $order->id)->delete();
+
+            // إعادة حساب الأرصدة
+            (new \App\Services\InventoryService)->updateAllBranches();
+        });
+    }
+
     /**
      * @var array<int, string>
      */
     protected $fillable = [
         'number',
+        'customer_id',
         'total',
         'discount',
         'install',
@@ -62,6 +85,11 @@ class Order extends Model
     public function orderLogs()
     {
         return $this->hasMany(OrderLog::class);
+    }
+
+    public function stockHistory(): HasMany
+    {
+        return $this->hasMany(StockHistory::class);
     }
 
     /** @return BelongsTo<Customer,self> */

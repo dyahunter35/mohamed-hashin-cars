@@ -29,48 +29,47 @@ class CreateOrder extends CreateRecord
         $order = $this->record;
 
         DB::transaction(function () use ($inventoryService, $currentBranch, $currentUser, $order) {
-            if ($order->items->isEmpty()) {
-                Notification::make()->title(__('order.actions.create.notifications.at_least_one'))->warning()->send();
-                // We throw an exception to roll back the transaction
-                throw new \Exception('Cannot create an order with no items.');
-            }
 
             // Skip stock deduction if the order is a Proforma invoice
-            if ($order->status === \App\Enums\OrderStatus::Proforma) {
+            $shouldDeduct = !in_array($order->status, [\App\Enums\OrderStatus::Proforma, \App\Enums\OrderStatus::Cancelled]);
+
+            if (!$shouldDeduct) {
                 $order->orderLogs()->create([
                     'log' => "Proforma Invoice created By: " . $currentUser->name,
                     'type' => 'created'
                 ]);
                 return;
             }
+            if ($shouldDeduct) {
 
-            foreach ($order->items as $item) {
-                $product = Product::find($item->product_id);
+                foreach ($order->items as $item) {
+                    $product = Product::find($item->product_id);
 
-                // Final check for stock before deduction
-                if (!$inventoryService->isAvailableInBranch($product, $currentBranch, $item->qty, $item->condition instanceof \App\Enums\ItemCondition ? $item->condition : \App\Enums\ItemCondition::from($item->condition))) {
-                    Notification::make()
-                        ->title(__('order.actions.create.notifications.stock.title'))
-                        ->body(__('order.actions.create.notifications.stock.message', ['product' => $product->name]))
-                        ->danger()
-                        ->send();
+                    // Final check for stock before deduction
+                    if (!$inventoryService->isAvailableInBranch($product, $currentBranch, $item->qty, $item->condition instanceof \App\Enums\ItemCondition ? $item->condition : \App\Enums\ItemCondition::from($item->condition))) {
+                        Notification::make()
+                            ->title(__('order.actions.create.notifications.stock.title'))
+                            ->body(__('order.actions.create.notifications.stock.message', ['product' => $product->name]))
+                            ->danger()
+                            ->send();
 
-                    throw new Halt();
+                        throw new Halt();
+                    }
+
+                    // Deduct the stock
+                    $inventoryService->deductStockForBranch(
+                        $product,
+                        $currentBranch,
+                        $item->qty,
+                        $item->condition,
+                        "Order #{$order->number}",
+                        $currentUser,
+                        $order->id
+                    );
                 }
 
-                // Deduct the stock
-                $inventoryService->deductStockForBranch(
-                    $product,
-                    $currentBranch,
-                    $item->qty,
-                    $item->condition,
-                    "Order #{$order->number}",
-                    $currentUser
-                );
+                $inventoryService->updateAllBranches();
             }
-
-            $inventoryService->updateAllBranches();
-
             $order->orderLogs()->create([
                 'log' => "Invoice created By: " . $currentUser->name,
                 'type' => 'created'

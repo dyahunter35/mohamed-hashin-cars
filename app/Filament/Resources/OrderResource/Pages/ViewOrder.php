@@ -25,7 +25,7 @@ class ViewOrder extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-
+            \App\Filament\Actions\Resource\ToProcessAction::make(),
             Actions\EditAction::make()->icon('heroicon-o-pencil'),
             Actions\DeleteAction::make()->icon('heroicon-o-trash'),
             Actions\Action::make('print')
@@ -36,6 +36,6 @@ class ViewOrder extends ViewRecord
                     $this->js('window.print()');
                 }),
 
-              ];
+        ];
     }
 }

@@ -215,6 +215,10 @@ return [
                 'label' => 'متوسط الإجمالي',
                 'icon' => 'heroicon-o-currency-dollar',
             ],
+            'proforma_orders' => [
+                'label' => 'الفواتير المبدئية',
+                'icon' => 'heroicon-o-document',
+            ],
         ],
     ],
     'invoice' => [

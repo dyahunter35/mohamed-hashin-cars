@@ -7,23 +7,25 @@ use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Carbon\Carbon;
 use Filament\Facades\Filament;
+use App\Enums\OrderStatus;
+
 
 class SalesStats extends BaseWidget
 {
     protected function getStats(): array
     {
-        $dateFilter = function (){};
+        $dateFilter = function () {};
 
-        if (auth()->user()->hasRole('super_admin')) {
-            $dateFilter = function ($q)  {
+        if (!auth()->user()->hasRole('super_admin')) {
+            $dateFilter = function ($q) {
                 $q->where('branch_id', Filament::getTenant()->id);
-
             };
         }
 
         // إحصائيات هذا الشهر
         $query = Order::whereMonth('created_at', Carbon::now()->month)
             ->whereYear('created_at', Carbon::now()->year)
+            ->where('status', '!=', OrderStatus::Proforma)
             ->where($dateFilter);
 
 
@@ -32,7 +34,9 @@ class SalesStats extends BaseWidget
         $thisMonthOrders = $query->count();
 
         // الإحصائيات الكلية
-        $overallTotal = Order::where($dateFilter)->sum('total');
+        $overallTotal = Order::where($dateFilter)
+            ->where('status', '!=', OrderStatus::Proforma)
+            ->sum('total');
 
 
         return [

@@ -20,6 +20,7 @@ class StockHistory extends Model
         'quantity_change',
         'condition',
         'new_quantity',
+        'order_id',
         'notes',
         'user_id',
     ];
@@ -40,11 +41,11 @@ class StockHistory extends Model
         });
         static::created(function (StockHistory $history) {
             $services = new InventoryService;
-            $services->updateAllBranches();
+            $services->updateStockInBranch($history->product_id, $history->branch_id);
 
             $product = $history->product;
 
-            if (($product->total_stock >= $product->security_stock) && $product->low_stock_notified_at) {
+            if ($product && ($product->total_stock >= $product->security_stock) && $product->low_stock_notified_at) {
                 $product->update(['low_stock_notified_at' => null]);
             }
         });
@@ -78,6 +79,10 @@ class StockHistory extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function order(): BelongsTo
+    {
+        return $this->belongsTo(Order::class);
+    }
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);

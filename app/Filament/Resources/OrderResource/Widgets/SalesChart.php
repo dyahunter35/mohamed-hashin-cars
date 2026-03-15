@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\OrderResource\Widgets;
 
+use App\Enums\OrderStatus;
 use App\Models\Order;
 use Filament\Widgets\ChartWidget;
 use Carbon\Carbon;
@@ -15,9 +16,10 @@ class SalesChart extends ChartWidget
     protected function getData(): array
     {
         $data = Order::select(
-                DB::raw('DATE(created_at) as date'),
-                DB::raw('SUM(total) as aggregate')
-            )
+            DB::raw('DATE(created_at) as date'),
+            DB::raw('SUM(total) as aggregate')
+        )
+            ->where('status', '!=', OrderStatus::Proforma)
             ->whereBetween('created_at', [Carbon::now()->subDays(30), Carbon::now()])
             ->groupBy('date')
             ->orderBy('date', 'ASC')
@@ -27,12 +29,12 @@ class SalesChart extends ChartWidget
             'datasets' => [
                 [
                     'label' => 'المبيعات',
-                    'data' => $data->map(fn ($value) => $value->aggregate),
+                    'data' => $data->map(fn($value) => $value->aggregate),
                     'backgroundColor' => '#36A2EB',
                     'borderColor' => '#9BD0F5',
                 ],
             ],
-            'labels' => $data->map(fn ($value) => Carbon::parse($value->date)->format('M d')),
+            'labels' => $data->map(fn($value) => Carbon::parse($value->date)->format('M d')),
         ];
     }
 
