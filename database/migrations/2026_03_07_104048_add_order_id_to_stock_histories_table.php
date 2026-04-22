@@ -11,9 +11,11 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::table('stock_histories', function (Blueprint $table) {
-            $table->foreignIdFor(Order::class)->nullable()->after('product_id');
-        });
+        if (!Schema::hasColumn('stock_histories', 'order_id')) {
+            Schema::table('stock_histories', function (Blueprint $table) {
+                $table->foreignIdFor(Order::class)->nullable()->after('product_id');
+            });
+        }
     }
 
     /**

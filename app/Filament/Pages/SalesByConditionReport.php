@@ -54,25 +54,25 @@ class SalesByConditionReport extends Page implements HasForms
     {
         return $form
             ->schema([
-                    Select::make('products')
-                        ->multiple()
-                        ->options(Product::all()->pluck('name', 'id'))
-                        ->label('المنتجات')
-                        ->reactive()
-                        ->afterStateUpdated(fn($state) => [$this->products = $state ?? [], $this->loadData()]), // لضمان التحديث اللحظي
+                Select::make('products')
+                    ->multiple()
+                    ->options(Product::all()->pluck('name', 'id'))
+                    ->label('المنتجات')
+                    ->reactive()
+                    ->afterStateUpdated(fn($state) => [$this->products = $state ?? [], $this->loadData()]), // لضمان التحديث اللحظي
 
-                    DateRangePicker::make('date_range')
-                        ->label('فترة التقرير')
-                        ->displayFormat('DD/MM/YYYY')
-                        ->reactive()
-                        ->suffixAction(
-                            Action::make('clear')
-                                ->label(__('filament-daterangepicker-filter::message.clear'))
-                                ->icon('heroicon-m-calendar-days')
-                                ->action(fn() => [$this->date_range = null, $this->loadData()])
-                        )
-                        ->afterStateUpdated(fn($state) => [$this->date_range = $state ?? '', $this->loadData()]) // لضمان التحديث اللحظي
-                ])->columns(2)
+                DateRangePicker::make('date_range')
+                    ->label('فترة التقرير')
+                    ->displayFormat('DD/MM/YYYY')
+                    ->reactive()
+                    ->suffixAction(
+                        Action::make('clear')
+                            ->label(__('filament-daterangepicker-filter::message.clear'))
+                            ->icon('heroicon-m-calendar-days')
+                            ->action(fn() => [$this->date_range = null, $this->loadData()])
+                    )
+                    ->afterStateUpdated(fn($state) => [$this->date_range = $state ?? '', $this->loadData()]) // لضمان التحديث اللحظي
+            ])->columns(2)
         ;
     }
 
@@ -86,42 +86,59 @@ class SalesByConditionReport extends Page implements HasForms
     {
         [$from, $to] = parseDateRange($this->date_range ?? '');
 
-        $salesData = OrderItem::query()
+        // الاستعلام من جدول تفاصيل الطلب للحصول على المبيعات الحقيقية
+        $salesData = \App\Models\OrderItem::query()
             ->select([
-                    'order_items.product_id',
-                    'order_items.condition',
-                    DB::raw('SUM(order_items.qty) as total_qty'),
-                    DB::raw('SUM(order_items.qty * order_items.price) as total_revenue'),
-                    DB::raw('COUNT(DISTINCT order_items.order_id) as order_count'),
-                ])
-            ->join('products', 'order_items.product_id', '=', 'products.id')
-            ->when($from && $to, fn($q) => $q->whereBetween('order_items.created_at', [$from, $to]))
+                'order_items.product_id',
+                'order_items.condition',
+                DB::raw("SUM(order_items.qty) as total_qty"),
+                DB::raw("SUM(order_items.sub_total) as total_revenue"),
+                DB::raw("COUNT(DISTINCT order_items.order_id) as order_count"),
+            ])
+            ->join('orders', 'order_items.order_id', '=', 'orders.id')
+            ->whereNull('orders.deleted_at')
+            ->whereNotIn('orders.status', ['cancelled', 'proforma'])
+            ->when($from && $to, fn($q) => $q->whereBetween('orders.created_at', [$from, $to]))
             ->when($this->products, fn($q) => $q->whereIn('order_items.product_id', $this->products))
             ->groupBy('order_items.product_id', 'order_items.condition')
             ->get();
 
+        // جلب بيانات المنتجات والعلامات التجارية
         $productIds = $salesData->pluck('product_id')->unique();
-        $products = Product::with(['brand', 'category'])->whereIn('id', $productIds)->get()->keyBy('id');
+        $productsInfo = Product::with(['brand', 'category'])
+            ->whereIn('id', $productIds)
+            ->get()
+            ->keyBy('id');
 
         $report = [];
+
         foreach ($salesData as $sale) {
             $id = $sale->product_id;
-            $product = $products->get($id);
+
+            if (!$id)
+                continue;
+
+            $product = $productsInfo->get($id);
+
+            if (!$product)
+                continue;
 
             if (!isset($report[$id])) {
                 $report[$id] = [
-                    'product_name' => $product?->name ?? 'غير معروف',
-                    'brand_name' => $product?->brand?->name ?? '-',
-                    'category' => $product?->category?->name ?? '-',
+                    'product_name' => $product->name,
+                    'brand_name' => $product->brand?->name ?? '-',
+                    'category' => $product->category?->name ?? '-',
                     'new' => ['qty' => 0, 'revenue' => 0, 'orders' => 0],
                     'used' => ['qty' => 0, 'revenue' => 0, 'orders' => 0],
                 ];
             }
 
-            $condition = is_object($sale->condition) ? $sale->condition->value : $sale->condition;
+            // تحديد الحالة (جديد أو مستعمل)
+            $condRaw = is_object($sale->condition) ? $sale->condition->value : $sale->condition;
+            $cond = strtolower(trim($condRaw));
 
-            if (in_array($condition, ['new', 'used'])) {
-                $report[$id][$condition] = [
+            if ($cond === 'new' || $cond === 'used') {
+                $report[$id][$cond] = [
                     'qty' => (float) $sale->total_qty,
                     'revenue' => (float) $sale->total_revenue,
                     'orders' => (int) $sale->order_count,
